@@ -83,18 +83,18 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
         return null;
     }
 
-    public static UserPrincipal create(User user) {
+    public static UserPrincipal create(Member member) {
         return new UserPrincipal(
-                user.getUserId(),
-                user.getPassword(),
-                user.getProviderType(),
+                member.getUserId(),
+                member.getPassword(),
+                member.getProviderType(),
                 RoleType.USER,
                 Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()))
         );
     }
 
-    public static UserPrincipal create(User user, Map<String, Object> attributes) {
-        UserPrincipal userPrincipal = create(user);
+    public static UserPrincipal create(Member member, Map<String, Object> attributes) {
+        UserPrincipal userPrincipal = create(member);
         userPrincipal.setAttributes(attributes);
 
         return userPrincipal;

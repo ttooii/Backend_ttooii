@@ -2,20 +2,18 @@ package com.toyproject.realty.entity.login;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name = "USER")
-public class User {
+@Table(name = "MEMBER")
+public class Member {
 
     @Id
     @Column(name = "user_id", length = 20, unique = true)
@@ -62,24 +60,10 @@ public class User {
     @NotNull
     private String deletion;
 
-    public User(
-            @NotNull String userId,
-            @NotNull String username,
-            @NotNull String email,
-            @NotNull ProviderType providerType,
-            @NotNull RoleType roleType,
-            @NotNull LocalDateTime createdAt,
-            @NotNull LocalDateTime modifiedAt,
-            @NotNull String deletion
-    ) {
+    @Builder
+    public Member(String userId,String email, String password){
         this.userId = userId;
-        this.username = username;
-        this.password = "NO_PASS";
-        this.email = email != null ? email : "NO_EMAIL";
-        this.providerType = providerType;
-        this.roleType = roleType;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.deletion = deletion;
+        this.email = email;
+        this.password = password;
     }
 }
