@@ -1,7 +1,7 @@
 package com.toyproject.realty.service;
 import java.util.Optional;
 
-import com.toyproject.realty.dto.UserDto;
+import com.toyproject.realty.dto.MemberDto;
 import com.toyproject.realty.entity.Member;
 import com.toyproject.realty.entity.RoleType;
 import com.toyproject.realty.repository.UserRepository;
@@ -26,7 +26,7 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Transactional
-    public String joinUser(UserDto userDto) {
+    public String joinUser(MemberDto userDto) {
         // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
