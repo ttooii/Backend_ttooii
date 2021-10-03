@@ -1,4 +1,4 @@
-package com.toyproject.realty.entity.login;
+package com.toyproject.realty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;

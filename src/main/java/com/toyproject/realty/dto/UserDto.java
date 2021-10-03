@@ -1,6 +1,6 @@
-package com.toyproject.realty.Dto;
+package com.toyproject.realty.dto;
 
-import com.toyproject.realty.entity.login.Member;
+import com.toyproject.realty.entity.Member;
 import lombok.*;
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package com.toyproject.realty.controller;
 
-import com.toyproject.realty.Dto.UserDto;
+import com.toyproject.realty.dto.UserDto;
 import com.toyproject.realty.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
