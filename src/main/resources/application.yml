@@ -13,6 +13,20 @@ spring:
       format_sql: true
       ddl-auto: create
 
+  thymeleaf:
+    cache: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 351b03d10108845002f9d13d8de3e8b7
+            client-secret: J7K60u0BCU0xWXtAXbCHiKcHbzgSEkEO
+          naver:
+            client-id: UlOvgcfnJwbDR074rXw_
+            client-secret: xC4n1elV4e
+
 logging:
   level:
     org:
