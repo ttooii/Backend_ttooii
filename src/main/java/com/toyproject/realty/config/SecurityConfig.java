@@ -1,6 +1,6 @@
 package com.toyproject.realty.config;
 
-import static com.toyproject.realty.security.SocialType.*;
+
 
 import com.toyproject.realty.security.CustomOAuth2Provider;
 import com.toyproject.realty.service.CustomOAuth2UserService;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
+import static com.toyproject.realty.security.SocialType.*;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
