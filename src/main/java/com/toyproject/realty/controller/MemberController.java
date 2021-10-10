@@ -1,35 +1,34 @@
 package com.toyproject.realty.controller;
 
-import com.toyproject.realty.dto.UserDto;
-import com.toyproject.realty.service.UserService;
+import com.toyproject.realty.dto.MemberDto;
+import com.toyproject.realty.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import javax.validation.Valid;
 @Controller
 @AllArgsConstructor
-public class UserController {
-    private UserService userService;
+public class MemberController {
+    private MemberService userService;
 
-    // 메인 페이지
-    @GetMapping("/")
-    public String index() {
-        return "/index";
-    }
 
-    // 회원가입 페이지
     @GetMapping("/user/signup")
-    public String dispSignup() {
+    public String createUserForm(Model model){
+        model.addAttribute("userForm",new MemberDto());
         return "/signup";
     }
 
-    // 회원가입 처리
     @PostMapping("/user/signup")
-    public String execSignup(UserDto userDto) {
-        userService.joinUser(userDto);
+    public String createUser(@Valid MemberDto memberDto, BindingResult result){
+        if(result.hasErrors()){
+            return "/signup";
+        }
+        userService.createUser(memberDto);
 
-        return "redirect:/user/login";
+        return "redirect:/";
     }
 
     // 로그인 페이지

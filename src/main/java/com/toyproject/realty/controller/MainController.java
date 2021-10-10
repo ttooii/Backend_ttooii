@@ -5,11 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class MainController {
 
-    @RestController
-    public class TestController {
-        @GetMapping("/home")
-        public String getHome() {
-            return "Hello World!";
-        }
+    // 메인 페이지
+    @GetMapping("/")
+    public String index() {
+        return "/index";
     }
 }

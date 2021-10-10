@@ -1,7 +1,7 @@
 package com.toyproject.realty.config;
 
 
-import com.toyproject.realty.service.UserService;
+import com.toyproject.realty.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
+    private MemberService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

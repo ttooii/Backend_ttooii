@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class UserDto {
+public class MemberDto {
     private String userId;
+    private String username;
     private String email;
+    private String phone;
     private String password;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -19,15 +21,19 @@ public class UserDto {
     public Member toEntity(){
         return Member.builder()
                 .userId(userId)
+                .username(username)
+                .phone(phone)
                 .email(email)
                 .password(password)
                 .build();
     }
 
     @Builder
-    public UserDto(String userId, String email, String password) {
+    public MemberDto(String userId,String email, String username, String phone, String password){
         this.userId = userId;
         this.email = email;
+        this.username = username;
+        this.phone = phone;
         this.password = password;
     }
 
