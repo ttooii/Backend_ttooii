@@ -2,11 +2,13 @@ package com.toyproject.realty.controller;
 
 import com.toyproject.realty.Dto.UserDto;
 import com.toyproject.realty.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Api(tags = {"로컬 로그인 API"})
 @Controller
 @AllArgsConstructor
 public class UserController {

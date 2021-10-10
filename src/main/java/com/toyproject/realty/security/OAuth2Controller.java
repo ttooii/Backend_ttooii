@@ -1,9 +1,10 @@
 package com.toyproject.realty.security;
 
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
+@Api(tags = {"소셜 로그인 API"})
 @Controller
 public class OAuth2Controller {
 
