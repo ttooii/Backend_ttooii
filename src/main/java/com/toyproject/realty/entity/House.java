@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Entity
 @Table(name = "HOUSE")
 public class House {
