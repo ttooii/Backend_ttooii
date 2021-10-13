@@ -20,7 +20,7 @@ public class House {
     @Column(name = "house_id", length = 20, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    private String houseId;
+    private Long houseId;
 
     @Column(name = "transaction_type", length = 20)
     @NotNull
@@ -109,7 +109,7 @@ public class House {
     private String deletion;
 
     @Builder
-    public House(String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String deletion) {
+    public House(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String deletion) {
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.exclusiveArea = exclusiveArea;
