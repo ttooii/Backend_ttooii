@@ -2,9 +2,7 @@ package com.toyproject.realty.controller;
 
 import com.toyproject.realty.dto.MemberDto;
 import com.toyproject.realty.service.MemberService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +17,12 @@ public class MemberController {
     private MemberService userService;
 
     @ApiOperation(value = "회원가입")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "아이디", required = true),
+            @ApiImplicitParam(name = "password", value = "비밀번호", required = true),
+            @ApiImplicitParam(name = "name", value = "닉네임", required = true),
+            @ApiImplicitParam(name = "email", value = "이메일", required = true),
+            @ApiImplicitParam(name = "phone", value = "휴대폰번호", required = true)})
     @GetMapping("/user/signup")
     public String createUserForm(Model model){
         model.addAttribute("userForm",new MemberDto());
@@ -37,6 +41,9 @@ public class MemberController {
 
     // 로그인 페이지
     @ApiOperation(value = "로그인 페이지")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "아이디", required = true),
+            @ApiImplicitParam(name = "password", value = "비밀번호", required = true)})
     @GetMapping("/user/login")
     public String dispLogin() {
         return "/login";

@@ -1,13 +1,13 @@
 package com.toyproject.realty.service;
 
-import com.toyproject.realty.dto.HouseDto;
+import com.toyproject.realty.dto.HouseListDto;
+import com.toyproject.realty.dto.HouseSaveDto;
 import com.toyproject.realty.entity.House;
 import com.toyproject.realty.repository.HouseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class HouseService {
     private HouseRepository houseRepository;
 
     @Transactional
-    public Long createHouse(HouseDto houseDto) {
+    public Long createHouse(HouseListDto houseDto) {
         House house = houseDto.toEntity();
         houseRepository.save(house);
 
@@ -36,12 +36,12 @@ public class HouseService {
 //    }
 //
     @Transactional
-    public List<HouseDto> getHouseList() {
+    public List<HouseListDto> getHouseList() {
         List<House> houseEntities = houseRepository.findAll();
-        List<HouseDto> houseDtoList = new ArrayList<>();
+        List<HouseListDto> houseDtoList = new ArrayList<>();
 
         for(House houseEntity : houseEntities) {
-            HouseDto houseDto = HouseDto.builder()
+            HouseListDto houseDto = HouseListDto.builder()
                     .houseId(houseEntity.getHouseId())
                     .transactionType(houseEntity.getTransactionType())
                     .exclusiveArea(houseEntity.getExclusiveArea())
@@ -65,5 +65,11 @@ public class HouseService {
         }
 
         return houseDtoList;
+    }
+
+    @Transactional
+    public Long save(HouseSaveDto requestDto) {
+
+        return houseRepository.save(requestDto.toEntity()).getHouseId();
     }
 }

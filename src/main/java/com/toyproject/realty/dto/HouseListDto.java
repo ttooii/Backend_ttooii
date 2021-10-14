@@ -5,7 +5,7 @@ import lombok.Builder;
 
 import java.util.Date;
 
-public class HouseDto {
+public class HouseListDto {
 
     private Long houseId;
     private String transactionType;
@@ -24,11 +24,12 @@ public class HouseDto {
     private int parkingCount;
     private String purpose;
     private int confirmation;
+    private String movesInDates;
+    private Date completionApproval;
 
 
     public House toEntity() {
         return House.builder()
-                .houseId(houseId)
                 .transactionType(transactionType)
                 .exclusiveArea(exclusiveArea)
                 .floor(floor)
@@ -45,11 +46,13 @@ public class HouseDto {
                 .parkingCount(parkingCount)
                 .purpose(purpose)
                 .confirmation(confirmation)
+                .movesInDates(movesInDates)
+                .completionApproval(completionApproval)
                 .build();
     }
 
     @Builder
-    public HouseDto(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation) {
+    public HouseListDto(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval) {
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.exclusiveArea = exclusiveArea;
@@ -67,5 +70,7 @@ public class HouseDto {
         this.parkingCount = parkingCount;
         this.purpose = purpose;
         this.confirmation = confirmation;
+        this.movesInDates = movesInDates;
+        this.completionApproval = completionApproval;
     }
 }

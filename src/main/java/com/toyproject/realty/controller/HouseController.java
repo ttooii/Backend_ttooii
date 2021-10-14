@@ -1,17 +1,19 @@
 package com.toyproject.realty.controller;
 
-import com.toyproject.realty.dto.HouseDto;
+import com.toyproject.realty.dto.HouseListDto;
+import com.toyproject.realty.dto.HouseSaveDto;
 import com.toyproject.realty.service.HouseService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,9 +22,8 @@ public class HouseController {
 
     private HouseService houseService;
 
-    /* 게시글 목록 */
-    @GetMapping("/house/list")
-    @ApiOperation(value = "방 목록", notes = "성공 시 방 목록을 반환합니다.")
+
+    @ApiOperation(value = "방 등록", notes = "성공 시 방 등록에 성공합니다.")
     @ApiImplicitParams(
             {@ApiImplicitParam(name = "title", value = "제목", required = true),
              @ApiImplicitParam(name = "content", value = "내용", required = true),
@@ -38,11 +39,17 @@ public class HouseController {
              @ApiImplicitParam(name = "bathroomCount", value = "화장실 개수", required = true),
              @ApiImplicitParam(name = "direction", value = "방향", required = true),
              @ApiImplicitParam(name = "heatingSystem", value = "난방 시스템", required = true),
-             @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true),
-            }
-    )
+             @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true)})
+    @PostMapping("/house/add")
+    public Long save(@Valid @RequestBody HouseSaveDto houseSaveDto) {
+
+        return houseService.save(houseSaveDto);
+    }
+
+    @ApiOperation(value = "방 목록 조회", notes = "성공 시 방 목록 조회에 성공합니다.")
+    @GetMapping("/house/list")
     public String list(Model model) {
-        List<HouseDto> houseList = houseService.getHouseList();
+        List<HouseListDto> houseList = houseService.getHouseList();
 
         model.addAttribute("houseList", houseList);
         return "houselist.html";
