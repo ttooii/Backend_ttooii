@@ -59,4 +59,8 @@ public class MemberDto {
 
     public void setPassword() {
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
