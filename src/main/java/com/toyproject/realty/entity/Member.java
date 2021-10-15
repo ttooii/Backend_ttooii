@@ -3,6 +3,7 @@ package com.toyproject.realty.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,6 +59,7 @@ public class Member {
 
     @Column(name = "deletion")
     @NotNull
+    @ColumnDefault("N")
     private String deletion;
 
     @Builder
