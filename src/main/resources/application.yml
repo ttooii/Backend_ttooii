@@ -6,12 +6,14 @@ spring:
     password: rootroot
 
   jpa:
+    spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: create
+      ddl-auto: update
 
 logging:
   level:
