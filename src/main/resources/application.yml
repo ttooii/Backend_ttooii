@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ttooii?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: rootroot
+    password: 12345
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -12,6 +12,20 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: update
+
+  thymeleaf:
+    cache: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 351b03d10108845002f9d13d8de3e8b7
+            client-secret: J7K60u0BCU0xWXtAXbCHiKcHbzgSEkEO
+          naver:
+            client-id: UlOvgcfnJwbDR074rXw_
+            client-secret: xC4n1elV4e
 
 logging:
   level:
@@ -22,4 +36,3 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
-
