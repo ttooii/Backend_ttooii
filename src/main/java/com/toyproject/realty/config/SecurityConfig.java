@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/myinfo").hasRole("MEMBER")
                 .antMatchers("/**").permitAll()
-                .and().csrf().disable()
+                .and().csrf().ignoringAntMatchers("/user/**").and()
                     // 로그인 설정
                 .formLogin()
                 .loginPage("/user/login")
