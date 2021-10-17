@@ -20,7 +20,7 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
+public class MemberPrincipal implements OAuth2User, UserDetails, OidcUser {
     private final String userId;
     private final String password;
     private final ProviderType providerType;
@@ -83,8 +83,8 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
         return null;
     }
 
-    public static UserPrincipal create(Member member) {
-        return new UserPrincipal(
+    public static MemberPrincipal create(Member member) {
+        return new MemberPrincipal(
                 member.getUserId(),
                 member.getPassword(),
                 member.getProviderType(),
@@ -93,8 +93,8 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
         );
     }
 
-    public static UserPrincipal create(Member member, Map<String, Object> attributes) {
-        UserPrincipal userPrincipal = create(member);
+    public static MemberPrincipal create(Member member, Map<String, Object> attributes) {
+        MemberPrincipal userPrincipal = create(member);
         userPrincipal.setAttributes(attributes);
 
         return userPrincipal;

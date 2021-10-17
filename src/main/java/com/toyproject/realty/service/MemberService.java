@@ -4,7 +4,7 @@ import java.util.Optional;
 import com.toyproject.realty.dto.MemberDto;
 import com.toyproject.realty.entity.Member;
 import com.toyproject.realty.entity.RoleType;
-import com.toyproject.realty.repository.UserRepository;
+import com.toyproject.realty.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,9 +21,10 @@ import java.util.List;
 
 
 @Service
+@Transactional(readOnly = true) // 구동 실패 시 Rollback 할 수 있도록 하는 안전장치
 @AllArgsConstructor
-public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
+public class MemberService implements UserDetailsService {
+    private MemberRepository userRepository;
 
     @Transactional
     public String joinUser(MemberDto userDto) {
@@ -48,5 +49,13 @@ public class UserService implements UserDetailsService {
         }
 
         return new User(member.getEmail(), member.getPassword(), authorities);
+    }
+
+    @Transactional
+    public String createUser(MemberDto memberDto) {
+        Member user = memberDto.toEntity();
+        userRepository.save(user);
+
+        return user.getUserId();
     }
 }

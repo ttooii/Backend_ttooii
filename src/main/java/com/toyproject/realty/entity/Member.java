@@ -48,22 +48,24 @@ public class Member {
     @NotNull
     private RoleType roleType;
 
-    @Column(name = "CREATED_AT")
-    @NotNull
-    private LocalDateTime createdAt;
-
-    @Column(name = "MODIFIED_AT")
-    @NotNull
-    private LocalDateTime modifiedAt;
+//    @Column(name = "CREATED_AT")
+//    @NotNull
+//    private LocalDateTime createdAt;
+//
+//    @Column(name = "MODIFIED_AT")
+//    @NotNull
+//    private LocalDateTime modifiedAt;
 
     @Column(name = "deletion")
     @NotNull
     private String deletion;
 
     @Builder
-    public Member(String userId,String email, String password){
+    public Member(String userId,String email, String username, String phone, String password){
         this.userId = userId;
         this.email = email;
+        this.username = username;
+        this.phone = phone;
         this.password = password;
     }
 }

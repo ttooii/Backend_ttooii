@@ -16,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "USER_REFRESH_TOKEN")
-public class UserRefreshToken {
+public class MemberRefreshToken {
     @JsonIgnore
     @Id
     @Column(name = "refresh_token_seq")
@@ -31,7 +31,7 @@ public class UserRefreshToken {
     @NotNull
     private String refreshToken;
 
-    public UserRefreshToken(
+    public MemberRefreshToken(
             @NotNull String userId,
             @NotNull String refreshToken
     ) {
