@@ -28,7 +28,7 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public String joinUser(MemberDto userDto) {
-        // 비밀번호 암호화
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
@@ -42,20 +42,7 @@ public class MemberService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (("admin@example.com").equals(userId)) {
-            authorities.add(new SimpleGrantedAuthority(RoleType.ADMIN.getCode()));
-        } else {
-            authorities.add(new SimpleGrantedAuthority(RoleType.USER.getCode()));
-        }
-
         return new User(member.getUserId(), member.getPassword(), authorities);
     }
 
-    @Transactional
-    public String createUser(MemberDto memberDto) {
-        Member user = memberDto.toEntity();
-        userRepository.save(user);
-
-        return user.getUserId();
-    }
 }

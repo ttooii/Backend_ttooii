@@ -1,6 +1,8 @@
 package com.toyproject.realty.dto;
 
 import com.toyproject.realty.entity.Member;
+import com.toyproject.realty.entity.ProviderType;
+import com.toyproject.realty.entity.RoleType;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -34,7 +36,8 @@ public class MemberDto {
     @NotBlank(message = "Password는 필수 입력 값입니다. 20자 이하로 입력해주세요.")
     @Size(max = 20, message = "20자 이하로 입력해주세요.")
     private String password;
-
+    private String providerType;
+    private String roleType;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -49,12 +52,15 @@ public class MemberDto {
     }
 
     @Builder
-    public MemberDto(String userId, String email, String username, String phone, String password) {
+    public MemberDto(String userId, String email, String username, String phone, String password,String providerType,String roleType) {
         this.userId = userId;
         this.email = email;
         this.username = username;
         this.phone = phone;
         this.password = password;
+        this.providerType=providerType;
+        this.roleType=roleType;
+
     }
 
     public void setPassword() {

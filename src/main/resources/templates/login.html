@@ -11,9 +11,21 @@
 <form action="/user/login" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-    <input type="text" name="username" placeholder="아이디를 입력해주세요">
+    <input type="text" name="userId" placeholder="아이디를 입력해주세요">
     <input type="password" name="password" placeholder="비밀번호를 입력해주세요">
     <button type="submit">로그인</button>
+    <a href="javascript:;" class="btn_social" data-social="kakao">카카오톡 로그인</a><br/>
+    <a href="javascript:;" class="btn_social" data-social="naver">네이버 로그인</a><br/>
+
+    <script>
+        let socials = document.getElementsByClassName("btn_social");
+        for(let social of socials) {
+            social.addEventListener('click', function(){
+                let socialType = this.getAttribute('data-social');
+                location.href="/oauth2/authorization/" + socialType;
+            })
+        }
+    </script>
 </form>
 </body>
 </html>

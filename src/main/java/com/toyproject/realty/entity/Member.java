@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -67,5 +68,4 @@ public class Member extends BaseTimeEntity{
         this.username = username;
         this.phone = phone;
         this.password = password;
-    }
-}
+    }}

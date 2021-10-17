@@ -1,5 +1,6 @@
 package com.toyproject.realty.controller;
-
+import static com.toyproject.realty.entity.ProviderType.*;
+import static com.toyproject.realty.entity.RoleType.*;
 import com.toyproject.realty.dto.MemberDto;
 import com.toyproject.realty.service.MemberService;
 import io.swagger.annotations.*;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @Api(tags = {"회원가입 로그인 API"})
 public class MemberController {
-    private MemberService userService;
+    private MemberService memberService;
 
     @GetMapping("/user/signup")
     public String createUserForm(Model model){
@@ -34,8 +35,7 @@ public class MemberController {
         if(result.hasErrors()){
             return "/signup";
         }
-        userService.createUser(memberDto);
-
+        memberService.joinUser(memberDto);
         return "redirect:/";
     }
 
