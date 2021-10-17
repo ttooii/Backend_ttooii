@@ -1,61 +1,80 @@
 package com.toyproject.realty.config;
 
-
-import com.toyproject.realty.service.MemberService;
-import lombok.AllArgsConstructor;
+import com.toyproject.realty.security.CustomOAuth2Provider;
+import com.toyproject.realty.service.CustomOAuth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.toyproject.realty.security.SocialType.*;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private MemberService userService;
+
+    @Override
+    public void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests()
+                    .antMatchers("/", "/oauth2/**", "/login/**", "/css/**",
+                            "/images/**", "/js/**", "/console/**", "/favicon.ico/**")
+                    .permitAll()
+                    .antMatchers("/kakao").hasAuthority(KAKAO.getRoleType())
+                    .antMatchers("/naver").hasAuthority(NAVER.getRoleType())
+                    .anyRequest().authenticated()
+                .and()
+                    .oauth2Login()
+                    .userInfoEndpoint().userService(new CustomOAuth2UserService())  // 네이버 USER INFO의 응답을 처리하기 위한 설정
+                .and()
+                    .defaultSuccessUrl("/loginSuccess")
+                    .failureUrl("/loginFailure")
+                .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public ClientRegistrationRepository clientRegistrationRepository(
+            OAuth2ClientProperties oAuth2ClientProperties,
+            @Value("${spring.security.oauth2.client.registration.kakao.client-id}") String kakaoClientId,
+            @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") String kakaoClientSecret,
+            @Value("${spring.security.oauth2.client.registration.naver.client-id}") String naverClientId,
+            @Value("${spring.security.oauth2.client.registration.naver.client-secret}") String naverClientSecret) {
+        List<ClientRegistration> registrations = oAuth2ClientProperties
+                .getRegistration().keySet().stream()
+                .map(client -> getRegistration(oAuth2ClientProperties, client))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao")
+                    .clientId(kakaoClientId)
+                    .clientSecret(kakaoClientSecret)
+                    .jwkSetUri("temp")
+                    .build());
+
+        registrations.add(CustomOAuth2Provider.NAVER.getBuilder("naver")
+                .clientId(naverClientId)
+                .clientSecret(naverClientSecret)
+                .jwkSetUri("temp")
+                .build());
+        return new InMemoryClientRegistrationRepository(registrations);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception
-    {
-        // static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
-    }
+    private ClientRegistration getRegistration(OAuth2ClientProperties clientProperties, String client) {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                // 페이지 권한 설정
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/myinfo").hasRole("MEMBER")
-                .antMatchers("/**").permitAll()
-                .and() // 로그인 설정
-                .formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/user/login/result")
-                .permitAll()
-                .and() // 로그아웃 설정
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/user/logout/result")
-                .invalidateHttpSession(true)
-                .and()
-                // 403 예외처리 핸들링
-                .exceptionHandling().accessDeniedPage("/user/denied");
-    }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        return null;
     }
 }

@@ -26,7 +26,7 @@ public class Member extends BaseTimeEntity{
     private String username;
 
     @JsonIgnore
-    @Column(name = "password", length = 20)
+    @Column(name = "password", length = 100)
     @NotNull
     private String password;
 
