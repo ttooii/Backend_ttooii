@@ -1,4 +1,4 @@
-package com.toyproject.realty.entity.login;
+package com.toyproject.realty.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

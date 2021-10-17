@@ -1,6 +1,6 @@
 package com.toyproject.realty.repository;
 
-import com.toyproject.realty.entity.login.Member;
+import com.toyproject.realty.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
