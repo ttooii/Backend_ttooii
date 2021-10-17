@@ -47,7 +47,7 @@ public class HouseSaveDto {
     }
 
     @Builder
-    public HouseSaveDto(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation) {
+    public HouseSaveDto() {
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.exclusiveArea = exclusiveArea;

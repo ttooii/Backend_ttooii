@@ -37,6 +37,7 @@ dependencies {
 
 }
 
+/*
 def webappDir = "$projectDir/../Frontend_ttoii"
 
 sourceSets {
@@ -85,3 +86,4 @@ task installReact(type: Exec) {
 test {
     useJUnitPlatform()
 }
+*/

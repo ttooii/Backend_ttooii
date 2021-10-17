@@ -16,6 +16,12 @@ import javax.validation.Valid;
 public class MemberController {
     private MemberService userService;
 
+    @GetMapping("/user/signup")
+    public String createUserForm(Model model){
+        model.addAttribute("userForm",new MemberDto());
+        return "/signup";
+    }
+
     @ApiOperation(value = "회원가입")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "아이디", required = true),
@@ -23,12 +29,6 @@ public class MemberController {
             @ApiImplicitParam(name = "name", value = "닉네임", required = true),
             @ApiImplicitParam(name = "email", value = "이메일", required = true),
             @ApiImplicitParam(name = "phone", value = "휴대폰번호", required = true)})
-    @GetMapping("/user/signup")
-    public String createUserForm(Model model){
-        model.addAttribute("userForm",new MemberDto());
-        return "/signup";
-    }
-
     @PostMapping("/user/signup")
     public String createUser(@Valid MemberDto memberDto, BindingResult result){
         if(result.hasErrors()){
@@ -53,7 +53,7 @@ public class MemberController {
     @ApiOperation(value = "로그인결과 페이지")
     @GetMapping("/user/login/result")
     public String dispLoginResult() {
-        return "/loginSuccess";
+        return "redirect:/";
     }
 
     // 로그아웃 결과 페이지
