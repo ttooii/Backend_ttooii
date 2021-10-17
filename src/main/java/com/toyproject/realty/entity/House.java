@@ -16,8 +16,8 @@ import java.util.Date;
 public class House {
 
     @Id
-    @Column(name = "house_id", length = 20, unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "house_id", length = 5, unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @NotNull
     private Long houseId;
 
