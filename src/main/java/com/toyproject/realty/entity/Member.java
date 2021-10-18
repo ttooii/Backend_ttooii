@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+
 @Entity
 @Table(name = "MEMBER")
 public class Member extends BaseTimeEntity{
@@ -62,10 +62,13 @@ public class Member extends BaseTimeEntity{
     private String deletion;
 
     @Builder
-    public Member(String userId,String email, String username, String phone, String password){
+    public Member(String userId,String email, String username, String phone, String password,ProviderType providerType, RoleType roleType,String deletion){
         this.userId = userId;
         this.email = email;
         this.username = username;
         this.phone = phone;
         this.password = password;
+        this.roleType=roleType;
+        this.providerType=providerType;
+        this.deletion=deletion;
     }}

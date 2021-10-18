@@ -3,6 +3,7 @@ import java.util.Optional;
 
 import com.toyproject.realty.dto.MemberDto;
 import com.toyproject.realty.entity.Member;
+import com.toyproject.realty.entity.ProviderType;
 import com.toyproject.realty.entity.RoleType;
 import com.toyproject.realty.repository.MemberRepository;
 import lombok.AllArgsConstructor;
@@ -27,12 +28,14 @@ public class MemberService implements UserDetailsService {
     private MemberRepository userRepository;
 
     @Transactional
-    public String joinUser(MemberDto userDto) {
+    public String joinUser(MemberDto memberDto) {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        return userRepository.save(userDto.toEntity()).getUserId();
+        memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        memberDto.setProviderType(ProviderType.LOCAL);
+        memberDto.setRoleType(RoleType.USER);
+        memberDto.setDeletion("N");
+        return userRepository.save(memberDto.toEntity()).getUserId();
     }
 
     @Override
