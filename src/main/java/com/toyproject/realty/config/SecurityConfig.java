@@ -49,9 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 페이지 권한 설정
-                .antMatchers("/", "/oauth2/**", "/login/**", "/css/**",
-                        "/images/**", "/js/**", "/console/**", "/favicon.ico/**")
-                .permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/kakao").hasAuthority(KAKAO.getRoleType())
                 .antMatchers("/naver").hasAuthority(NAVER.getRoleType())
                 .anyRequest().authenticated()
