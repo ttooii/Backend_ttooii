@@ -7,10 +7,10 @@ import com.toyproject.realty.entity.ProviderType;
 import com.toyproject.realty.entity.RoleType;
 import com.toyproject.realty.repository.MemberRepository;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.UUID;
 
 @Service
@@ -42,7 +42,7 @@ public class OAuth2SignupService {
         String email;
         String username;
         String target = "email=";
-        String uniqueID = UUID.randomUUID().toString().substring(0,10);
+        String uniqueID = RandomStringUtils.random(10, true,true);
         String uniquePassword=UUID.randomUUID().toString();
         int target_num = information.lastIndexOf(target);
         System.out.println(information);
