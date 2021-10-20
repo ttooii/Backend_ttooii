@@ -1,9 +1,16 @@
 package com.toyproject.realty.service;
 
+import com.toyproject.realty.dto.SocialMemberDto;
+import com.toyproject.realty.entity.ProviderType;
+import com.toyproject.realty.entity.RoleType;
+import com.toyproject.realty.repository.MemberRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
@@ -17,31 +24,35 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import javax.management.relation.RelationNotFoundException;
+import java.util.*;
 
+@Service
+@Transactional(readOnly = true) // 구동 실패 시 Rollback 할 수 있도록 하는 안전장치
+@AllArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+    private static String providerType;
     private static final String MISSING_USER_INFO_URI_ERROR_CODE = "missing_user_info_uri";
-
     private static final String MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE = "missing_user_name_attribute";
-
     private static final String INVALID_USER_INFO_RESPONSE_ERROR_CODE = "invalid_user_info_response";
+
 
     private static final ParameterizedTypeReference<Map<String, Object>> PARAMETERIZED_RESPONSE_TYPE =
             new ParameterizedTypeReference<Map<String, Object>>() {};
-
     private Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter = new OAuth2UserRequestEntityConverter();
 
     private RestOperations restOperations;
-
+    public String getProviderType(){
+        return providerType;
+    }
     public CustomOAuth2UserService() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
@@ -61,8 +72,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             );
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString());
         }
+        providerType=userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
+        //providerType=userRequest.getClientRegistration().getRegistrationId();
+
         if (!StringUtils.hasText(userNameAttributeName)) {
             OAuth2Error oauth2Error = new OAuth2Error(
                     MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE,
@@ -117,6 +131,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userAttributes.putAll(responseData);
             userAttributes.remove("response");
         }
+
         return userAttributes;
     }
+
+
+
+
 }

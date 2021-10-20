@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+</head>
+<body>
+<h1>회원가입</h1>
+<hr>
+
+<form action="/socialSignup" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <input type="text" name="phone" placeholder="휴대폰번호를 입력해주세요"> </br>
+    <button type="submit">회원가입</button>
+</form>
+</body>
+</html>
