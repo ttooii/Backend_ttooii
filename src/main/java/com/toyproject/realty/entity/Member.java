@@ -61,8 +61,11 @@ public class Member extends BaseTimeEntity{
     @ColumnDefault("N")
     private String deletion;
 
+
+    @Column(name="address")
+    private String address;
     @Builder
-    public Member(String userId,String email, String username, String phone, String password,ProviderType providerType, RoleType roleType,String deletion){
+    public Member(String userId,String email, String username, String phone, String password,ProviderType providerType, RoleType roleType,String deletion,String address){
         this.userId = userId;
         this.email = email;
         this.username = username;
@@ -71,4 +74,5 @@ public class Member extends BaseTimeEntity{
         this.roleType=roleType;
         this.providerType=providerType;
         this.deletion=deletion;
+        this.address=address;
     }}
