@@ -16,13 +16,16 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class SocialMemberDto {
+    @NotBlank(message = "Phone는 필수 입력 값입니다. 예시) 010-xxxx-xxxx.")
+    private String phone;
+
+    @NotBlank(message = "Address는 필수 입력 값입니다.")
+    private String address;
 
     private String userId;
     private String username;
     private String email;
     private String password;
-    @NotBlank(message = "Phone는 필수 입력 값입니다. 예시) 010-xxxx-xxxx.")
-    private String phone;
     private ProviderType providerType;
     private RoleType roleType;
     private LocalDateTime createdDate;
@@ -38,6 +41,7 @@ public class SocialMemberDto {
                 .providerType(providerType)
                 .roleType(roleType)
                 .deletion(deletion)
+                .address(address)
                 .build();
     }
 

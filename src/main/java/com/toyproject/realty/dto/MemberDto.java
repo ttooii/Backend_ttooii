@@ -36,11 +36,16 @@ public class MemberDto {
     @NotBlank(message = "Password는 필수 입력 값입니다. 20자 이하로 입력해주세요.")
     @Size(max = 20, message = "20자 이하로 입력해주세요.")
     private String password;
+
+    @NotBlank(message = "Address는 필수 입력 값입니다.")
+    private String address;
+
     private ProviderType providerType;
     private RoleType roleType;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private  String deletion;
+
     public Member toEntity() {
         return Member.builder()
                 .userId(userId)
@@ -51,6 +56,7 @@ public class MemberDto {
                 .providerType(providerType)
                 .roleType(roleType)
                 .deletion(deletion)
+                .address(address)
                 .build();
     }
 
