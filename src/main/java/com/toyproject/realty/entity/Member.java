@@ -7,6 +7,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -59,6 +61,9 @@ public class Member extends BaseTimeEntity{
     @Column(name = "deletion")
     @ColumnDefault("N")
     private String deletion;
+
+    @OneToMany(mappedBy = "member")
+    private List<House> houses = new ArrayList<>();
 
     @Builder
     public Member(String userId,String email, String username, String phone, String password){

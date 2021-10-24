@@ -72,4 +72,17 @@ public class HouseService {
 
         return houseRepository.save(requestDto.toEntity()).getHouseId();
     }
+
+    public List<HouseListDto> searchPosts(String keyword) {
+        List<House> houseEntities = houseRepository.findByOptions(keyword);
+        List<HouseListDto> houseDtoList = new ArrayList<>();
+
+        if (houseEntities.isEmpty()) return houseDtoList;
+
+        for (House houseEntity : houseEntities) {
+            houseDtoList.add(this.convertEntityToDto(house));
+        }
+
+        return houseDtoList;
+    }
 }

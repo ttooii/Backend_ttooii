@@ -11,9 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -66,6 +65,24 @@ public class HouseController {
         model.addAttribute("houseList", houseList);
         return "houselist.html";
     }
+
+    @GetMapping("~/house/optionSearch")
+    public String search(@RequestParam(value="keyword") String keyword, Model model) {
+        List<HouseListDto> boardDtoList = houseService.searchPosts(keyword);
+
+        model.addAttribute("boardList", boardDtoList);
+
+        return "board/list.html";
+    }
+
+    // 아래 참고
+    /*
+    @GetMapping("args")
+    public ResponseEntity<?> getArgs(@RequestParam(value = "msg") String msg, @RequestParam(value = "msg2") String msg2) {
+
+    return new ResponseEntity<>(msg + " / " + msg2, HttpStatus.OK);
+    }
+     */
 
 //    @GetMapping("/house/{houseId}")
 //    public String index(Long houseId, Model model, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
