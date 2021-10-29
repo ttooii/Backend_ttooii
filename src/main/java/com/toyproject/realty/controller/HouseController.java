@@ -65,14 +65,22 @@ public class HouseController {
         model.addAttribute("houseList", houseList);
         return "houselist.html";
     }
+ß
+    @GetMapping("/house/optionSearch")
+    public String search(
+            @RequestParam(value = "option1", required = false) String option1,
+            @RequestParam(value = "option2", required = false) String option2,
+            @RequestParam(value = "option3", required = false) String option3) {
 
-    @GetMapping("~/house/optionSearch")
-    public String search(@RequestParam(value="keyword") String keyword, Model model) {
-        List<HouseListDto> boardDtoList = houseService.searchPosts(keyword);
+        /*
+        List<HouseListDto> houseListDtoList = houseService.searchPosts(option1);
+        List<HouseListDto> houseListDtoList = houseService.searchPosts(option2);
+        List<HouseListDto> houseListDtoList = houseService.searchPosts(option3);
 
-        model.addAttribute("boardList", boardDtoList);
+        model.addAttribute("houseListDtoList", houseListDtoList);
+        */
 
-        return "board/list.html";
+        return "house/optionlist.html";
     }
 
     // 아래 참고

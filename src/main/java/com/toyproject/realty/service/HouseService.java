@@ -85,4 +85,6 @@ public class HouseService {
 
         return houseDtoList;
     }
+
+
 }
