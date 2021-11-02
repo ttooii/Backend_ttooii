@@ -40,6 +40,7 @@ public class OAuth2Controller {
     public String loginSuccess(Authentication authentication) {
         boolean exist=oAuth2SignupService.findDB(authentication);
         String page="redirect:/mainPage";
+        System.out.println(authentication.getName());
 
         if(exist==false){page= "redirect:/socialSignup";}
         return page;
@@ -64,6 +65,8 @@ public class OAuth2Controller {
         if(result.hasErrors()){
             return "/socialSignup";
         }
+        System.out.println(authentication.getName());
+
         oAuth2SignupService.socialJoinUser(memberDto,authentication);
         return "redirect:/mainPage";
     }

@@ -7,12 +7,17 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -33,7 +38,6 @@ public class NoticeController {
     @GetMapping("/notice/list")
     public String list(Model model) {
         List<NoticeDto> noticeList=noticeService.getNoticeList();
-
         model.addAttribute("noticeList",noticeList);
         return "notice/list.html";
     }
@@ -46,12 +50,18 @@ public class NoticeController {
     }
 
     @PostMapping("/notice/write")
-    public String write(NoticeDto noticeDto) {
+    public String write(NoticeDto noticeDto,Authentication authentication) {
+        if(authentication.getName().length()>20){
+            noticeDto.setWriter(authentication.getName().substring(0,19));
+        }
+        else{
+            noticeDto.setWriter(authentication.getName());
+        }
+
         noticeService.savePost(noticeDto);
 
         return "redirect:/notice/list";
     }
-
 
     @ApiOperation(value="공지사항 no.글 수정")
     @ApiImplicitParams({

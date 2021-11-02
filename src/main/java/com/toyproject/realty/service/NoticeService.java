@@ -1,9 +1,12 @@
 package com.toyproject.realty.service;
 
 import com.toyproject.realty.dto.NoticeDto;
+import com.toyproject.realty.entity.Member;
 import com.toyproject.realty.entity.Notice;
+import com.toyproject.realty.repository.MemberRepository;
 import com.toyproject.realty.repository.NoticeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,7 +18,7 @@ import java.util.Optional;
 @Service
 public class NoticeService {
     private NoticeRepository noticeRepository;
-
+    private  MemberRepository memberRepository;
     @Transactional
     public List<NoticeDto> getNoticeList() {
         List<Notice> notices = noticeRepository.findAll();
@@ -34,7 +37,7 @@ public class NoticeService {
         return noticeDtoList;
     }
     @Transactional
-    public Long savePost(NoticeDto noticeDto) {
+    public Long savePost(NoticeDto noticeDto ) {
         return noticeRepository.save(noticeDto.toEntity()).getId();
     }
     @Transactional

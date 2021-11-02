@@ -58,7 +58,7 @@ public class OAuth2SignupService {
         socialmemberDto.setPassword(uniquePassword);
         socialmemberDto.setEmail(email);
         socialmemberDto.setUsername(username);
-        socialmemberDto.setUserId(authentication.getName());
+        socialmemberDto.setUserId(authentication.getName().substring(0,19));
         socialmemberDto.setDeletion("N");
         socialmemberDto.setRoleType(RoleType.USER);
 
