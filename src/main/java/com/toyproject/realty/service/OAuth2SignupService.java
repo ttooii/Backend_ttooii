@@ -11,6 +11,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -42,7 +44,6 @@ public class OAuth2SignupService {
         String email;
         String username;
         String target = "email=";
-        String uniqueID = RandomStringUtils.random(10, true,true);
         String uniquePassword=UUID.randomUUID().toString();
         int target_num = information.lastIndexOf(target);
         System.out.println(information);
@@ -57,9 +58,10 @@ public class OAuth2SignupService {
         socialmemberDto.setPassword(uniquePassword);
         socialmemberDto.setEmail(email);
         socialmemberDto.setUsername(username);
-        socialmemberDto.setUserId(uniqueID);
+        socialmemberDto.setUserId(authentication.getName());
         socialmemberDto.setDeletion("N");
         socialmemberDto.setRoleType(RoleType.USER);
+
         if(customOAuth2UserService.getProviderType().equals("naver")){
             socialmemberDto.setProviderType(ProviderType.NAVER);
         }
