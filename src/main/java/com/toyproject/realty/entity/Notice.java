@@ -10,14 +10,14 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "board")
+@Table(name = "notice")
 public class Notice extends TimeEntity  {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     private String writer;
 
     @Column(length = 100, nullable = false)
