@@ -50,6 +50,7 @@ public class Member extends BaseTimeEntity{
     @ColumnDefault("ROLE_USER")
     private RoleType roleType;
 
+
 //    @Column(name = "CREATED_AT")
 //    @NotNull
 //    private LocalDateTime createdAt;

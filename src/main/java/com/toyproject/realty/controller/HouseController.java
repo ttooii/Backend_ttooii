@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -65,42 +66,38 @@ public class HouseController {
         model.addAttribute("houseList", houseList);
         return "houselist.html";
     }
-ß
-    @GetMapping("/house/optionSearch")
-    public String search(
-            @RequestParam(value = "option1", required = false) String option1,
-            @RequestParam(value = "option2", required = false) String option2,
-            @RequestParam(value = "option3", required = false) String option3) {
 
-        /*
-        List<HouseListDto> houseListDtoList = houseService.searchPosts(option1);
-        List<HouseListDto> houseListDtoList = houseService.searchPosts(option2);
-        List<HouseListDto> houseListDtoList = houseService.searchPosts(option3);
+    // 지역으로 방 목록 조회
+    @GetMapping("/house/addressSearch")
+    public String addressSearch(@RequestParam(value = "address", required = false) String address, Model model) {
+
+        List<HouseListDto> houseListDtoList = new ArrayList<HouseListDto>();
+        houseListDtoList.addAll(houseService.searchLocationHouse(address));
 
         model.addAttribute("houseListDtoList", houseListDtoList);
-        */
 
-        return "house/optionlist.html";
+        return "houseAddressList.html";
     }
 
-    // 아래 참고
-    /*
-    @GetMapping("args")
-    public ResponseEntity<?> getArgs(@RequestParam(value = "msg") String msg, @RequestParam(value = "msg2") String msg2) {
 
-    return new ResponseEntity<>(msg + " / " + msg2, HttpStatus.OK);
+    // 옵션으로 방 목록 조회
+    @GetMapping("/house/optionSearch")
+    public String optionSearch(
+            @RequestParam(value = "option1", required = false) String option1,
+            @RequestParam(value = "option2", required = false) String option2,
+            @RequestParam(value = "option3", required = false) String option3, Model model) {
+
+
+        List<HouseListDto> houseListDtoList = new ArrayList<HouseListDto>();
+        houseListDtoList.addAll(houseService.searchServiceTypeHouse(option1));
+        houseListDtoList.addAll(houseService.searchTransactionTypeHouse(option2));
+        houseListDtoList.addAll(houseService.searchMonthlyExpensesHouse(option3));
+
+        model.addAttribute("houseListDtoList", houseListDtoList);
+
+        return "houseOptionList.html";
     }
-     */
 
-//    @GetMapping("/house/{houseId}")
-//    public String index(Long houseId, Model model, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-//
-//        model.addAttribute("view", houseService.houseUpdateHit(houseId));
-//        model.addAttribute("HouseList", houseService.getHouseList(pageable));
-//        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber()); // 이전 버튼
-//        model.addAttribute("next", pageable.next().getPageNumber()); // 다음 버튼
-//        model.addAttribute("check", houseService.getListCheck(pageable)); // 마지막 글 체크
-//
-//        return "index";
-//    }
+    // 방 리스트에 이미지 보이게 만들기
+
 }

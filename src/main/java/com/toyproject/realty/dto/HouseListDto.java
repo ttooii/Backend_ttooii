@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class HouseListDto {
 
-    private Long houseId;
+    private String houseId;
     private String transactionType;
     private Float exclusiveArea;
     private int floor;
@@ -26,6 +26,9 @@ public class HouseListDto {
     private int confirmation;
     private String movesInDates;
     private Date completionApproval;
+    private String location;
+    private String serviceType;
+    private int monthlyExpenses;
 
 
     public House toEntity() {
@@ -48,11 +51,14 @@ public class HouseListDto {
                 .confirmation(confirmation)
                 .movesInDates(movesInDates)
                 .completionApproval(completionApproval)
+                .location(location)
+                .serviceType(serviceType)
+                .monthlyExpenses(monthlyExpenses)
                 .build();
     }
 
     @Builder
-    public HouseListDto(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval) {
+    public HouseListDto(String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval, String location, String serviceType, int monthlyExpenses) {
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.exclusiveArea = exclusiveArea;
@@ -72,5 +78,8 @@ public class HouseListDto {
         this.confirmation = confirmation;
         this.movesInDates = movesInDates;
         this.completionApproval = completionApproval;
+        this.location = location;
+        this.serviceType = serviceType;
+        this.monthlyExpenses = monthlyExpenses;
     }
 }
