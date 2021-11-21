@@ -1,12 +1,15 @@
 package com.toyproject.realty.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,18 +20,14 @@ public class House {
 
     @Id
     @Column(name = "house_id", length = 5, unique = true)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "USER_GENERATOR")
+    @GenericGenerator(name = "USER_GENERATOR", strategy = "uuid")
     @NotNull
-    private Long houseId;
+    private String houseId;
 
     @Column(name = "transaction_type", length = 20)
     @NotNull
     private String transactionType;
-
-    @JsonIgnore
-    @Column(name = "exclusive_area")
-    @NotNull
-    private Float exclusiveArea;
 
     @Column(name = "floor")
     @NotNull
@@ -37,7 +36,6 @@ public class House {
     @Column(name = "total_floor")
     @NotNull
     private int totalFloor;
-
 
     @Column(name = "market_value")
     @NotNull
@@ -103,15 +101,30 @@ public class House {
     @NotNull
     private int confirmation;
 
-    @Column(name = "deletion")
+    @Column(name = "service_type")
     @NotNull
-    private String deletion;
+    private String serviceType;
+
+    @Column(name = "location")
+    @NotNull
+    private String location;
+
+    @Column(name = "monthly_expenses")
+    @NotNull
+    private int monthlyExpenses;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Member member;
+
+    @JsonIgnoreProperties({"house"})
+    @OneToMany(mappedBy = "house")
+    private List<Wishlist> wishlistList;
 
     @Builder
-    public House(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String deletion) {
+    public House(String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String serviceType, String location, int monthlyExpenses) {
         this.houseId = houseId;
         this.transactionType = transactionType;
-        this.exclusiveArea = exclusiveArea;
         this.floor = floor;
         this.totalFloor = totalFloor;
         this.marketValue = marketValue;
@@ -130,6 +143,8 @@ public class House {
         this.parkingCount = parkingCount;
         this.purpose = purpose;
         this.confirmation = confirmation;
-        this.deletion = deletion;
+        this.serviceType = serviceType;
+        this.location = location;
+        this.monthlyExpenses = monthlyExpenses;
     }
 }

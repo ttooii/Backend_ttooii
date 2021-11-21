@@ -3,7 +3,6 @@ import java.util.Optional;
 
 import com.toyproject.realty.dto.MemberDto;
 import com.toyproject.realty.entity.Member;
-import com.toyproject.realty.entity.ProviderType;
 import com.toyproject.realty.entity.RoleType;
 import com.toyproject.realty.repository.MemberRepository;
 import lombok.AllArgsConstructor;
@@ -25,32 +24,38 @@ import java.util.List;
 @Transactional(readOnly = true) // 구동 실패 시 Rollback 할 수 있도록 하는 안전장치
 @AllArgsConstructor
 public class MemberService implements UserDetailsService {
-    private MemberRepository memberRepository;
+    private MemberRepository userRepository;
 
     @Transactional
-    public String joinUser(MemberDto memberDto) {
-
+    public String joinUser(MemberDto userDto) {
+        // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        memberDto.setProviderType(ProviderType.LOCAL);
-        memberDto.setRoleType(RoleType.USER);
-        memberDto.setDeletion("N");
-        return memberRepository.save(memberDto.toEntity()).getUserId();
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        return userRepository.save(userDto.toEntity()).getUserId();
     }
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Optional<Member> memberWrapper = memberRepository.findByuserId(userId);
+        Optional<Member> memberWrapper = userRepository.findByuserId(userId);
         Member member = memberWrapper.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
+        if (("admin@example.com").equals(userId)) {
+            authorities.add(new SimpleGrantedAuthority(RoleType.ADMIN.getCode()));
+        } else {
+            authorities.add(new SimpleGrantedAuthority(RoleType.USER.getCode()));
+        }
+
         return new User(member.getUserId(), member.getPassword(), authorities);
     }
-    public boolean checkUserIdDuplicate(String userId){
-        return memberRepository.existsByUserId(userId);
-    }
-    public boolean checkEmailDuplicate(String email){
-        return memberRepository.existsByEmail(email);
+
+    @Transactional
+    public String createUser(MemberDto memberDto) {
+        Member user = memberDto.toEntity();
+        userRepository.save(user);
+
+        return user.getUserId();
     }
 }

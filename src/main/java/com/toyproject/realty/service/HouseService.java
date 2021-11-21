@@ -19,7 +19,7 @@ public class HouseService {
     private HouseRepository houseRepository;
 
     @Transactional
-    public Long createHouse(HouseListDto houseDto) {
+    public String createHouse(HouseListDto houseDto) {
         House house = houseDto.toEntity();
         houseRepository.save(house);
 
@@ -44,7 +44,6 @@ public class HouseService {
             HouseListDto houseDto = HouseListDto.builder()
                     .houseId(houseEntity.getHouseId())
                     .transactionType(houseEntity.getTransactionType())
-                    .exclusiveArea(houseEntity.getExclusiveArea())
                     .floor(houseEntity.getFloor())
                     .totalFloor(houseEntity.getTotalFloor())
                     .marketValue(houseEntity.getMarketValue())
@@ -59,6 +58,8 @@ public class HouseService {
                     .parkingCount(houseEntity.getParkingCount())
                     .purpose(houseEntity.getPurpose())
                     .confirmation(houseEntity.getConfirmation())
+                    .serviceType(houseEntity.getServiceType())
+                    .monthlyExpenses(houseEntity.getMonthlyExpenses())
                     .build();
 
             houseDtoList.add(houseDto);
@@ -68,8 +69,87 @@ public class HouseService {
     }
 
     @Transactional
-    public Long save(HouseSaveDto requestDto) {
+    public String save(HouseSaveDto requestDto) {
 
         return houseRepository.save(requestDto.toEntity()).getHouseId();
     }
+
+    public List<HouseListDto> searchLocationHouse(String keyword) {
+        List<House> houseEntities = houseRepository.findByLocationContaining(keyword);
+        List<HouseListDto> houseDtoList = new ArrayList<>();
+
+        if (houseEntities.isEmpty()) return houseDtoList;
+
+        for (House houseEntity : houseEntities) {
+            houseDtoList.add(this.convertEntityToDto(houseEntity));
+        }
+
+        return houseDtoList;
+    }
+
+    public List<HouseListDto> searchServiceTypeHouse(String keyword) {
+        List<House> houseEntities = houseRepository.findByServiceTypeContaining(keyword);
+        List<HouseListDto> houseDtoList = new ArrayList<>();
+
+        if (houseEntities.isEmpty()) return houseDtoList;
+
+        for (House houseEntity : houseEntities) {
+            houseDtoList.add(this.convertEntityToDto(houseEntity));
+        }
+
+        return houseDtoList;
+    }
+
+    public List<HouseListDto> searchTransactionTypeHouse(String keyword) {
+        List<House> houseEntities = houseRepository.findByTransactionTypeContaining(keyword);
+        List<HouseListDto> houseDtoList = new ArrayList<>();
+
+        if (houseEntities.isEmpty()) return houseDtoList;
+
+        for (House houseEntity : houseEntities) {
+            houseDtoList.add(this.convertEntityToDto(houseEntity));
+        }
+
+        return houseDtoList;
+    }
+
+    public List<HouseListDto> searchMonthlyExpensesHouse(String keyword) {
+        List<House> houseEntities = houseRepository.findByMonthlyExpensesContaining(keyword);
+        List<HouseListDto> houseDtoList = new ArrayList<>();
+
+        if (houseEntities.isEmpty()) return houseDtoList;
+
+        for (House houseEntity : houseEntities) {
+            houseDtoList.add(this.convertEntityToDto(houseEntity));
+        }
+
+        return houseDtoList;
+    }
+
+    private HouseListDto convertEntityToDto(House houseEntity) {
+
+        return HouseListDto.builder()
+                .houseId(houseEntity.getHouseId())
+                .transactionType(houseEntity.getTransactionType())
+                .floor(houseEntity.getFloor())
+                .totalFloor(houseEntity.getTotalFloor())
+                .marketValue(houseEntity.getMarketValue())
+                .roomCount(houseEntity.getRoomCount())
+                .administrationCost(houseEntity.getAdministrationCost())
+                .bathroomCount(houseEntity.getBathroomCount())
+                .direction(houseEntity.getDirection())
+                .heatingSystem(houseEntity.getHeatingSystem())
+                .title(houseEntity.getTitle())
+                .content(houseEntity.getContent())
+                .landArea(houseEntity.getLandArea())
+                .parkingCount(houseEntity.getParkingCount())
+                .purpose(houseEntity.getPurpose())
+                .confirmation(houseEntity.getConfirmation())
+                .location(houseEntity.getLocation())
+                .serviceType(houseEntity.getServiceType())
+                .monthlyExpenses(houseEntity.getMonthlyExpenses())
+                .build();
+    }
+
+
 }

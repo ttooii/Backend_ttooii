@@ -4,15 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
+@AllArgsConstructor
 @Entity
 @Table(name = "MEMBER")
 public class Member extends BaseTimeEntity{
@@ -27,7 +28,7 @@ public class Member extends BaseTimeEntity{
     private String username;
 
     @JsonIgnore
-    @Column(name = "password", length = 100)
+    @Column(name = "password", length = 20)
     @NotNull
     private String password;
 
@@ -49,6 +50,7 @@ public class Member extends BaseTimeEntity{
     @ColumnDefault("ROLE_USER")
     private RoleType roleType;
 
+
 //    @Column(name = "CREATED_AT")
 //    @NotNull
 //    private LocalDateTime createdAt;
@@ -61,18 +63,15 @@ public class Member extends BaseTimeEntity{
     @ColumnDefault("N")
     private String deletion;
 
+    @OneToMany(mappedBy = "member")
+    private List<House> houses = new ArrayList<>();
 
-    @Column(name="address")
-    private String address;
     @Builder
-    public Member(String userId,String email, String username, String phone, String password,ProviderType providerType, RoleType roleType,String deletion,String address){
+    public Member(String userId,String email, String username, String phone, String password){
         this.userId = userId;
         this.email = email;
         this.username = username;
         this.phone = phone;
         this.password = password;
-        this.roleType=roleType;
-        this.providerType=providerType;
-        this.deletion=deletion;
-        this.address=address;
-    }}
+    }
+}
