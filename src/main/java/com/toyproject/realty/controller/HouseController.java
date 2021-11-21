@@ -48,7 +48,9 @@ public class HouseController {
                     @ApiImplicitParam(name = "bathroomCount", value = "화장실 개수", required = true),
                     @ApiImplicitParam(name = "direction", value = "방향", required = true),
                     @ApiImplicitParam(name = "heatingSystem", value = "난방 시스템", required = true),
-                    @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true)})
+                    @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true),
+                    @ApiImplicitParam(name = "registrant", value = "등록한 중개자 ID", required = true)
+            })
     @PostMapping("/house/add")
     public String createHouse(@Valid HouseSaveDto houseSaveDto, BindingResult result, Authentication authentication) {
         if(result.hasErrors()){
