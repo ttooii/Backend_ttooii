@@ -1,22 +1,31 @@
-server:
-  port: 51010
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://kiotmysqlrw.kweather.co.kr:3306/test?serverTimezone=UTC&characterEncoding=UTF-8
-    username: kiot
-    password: zpdliot1!
+    url: jdbc:mysql://localhost:3306/example?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 12345
 
   jpa:
-    spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: update
+      ddl-auto: create
+
+  thymeleaf:
+    cache: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 351b03d10108845002f9d13d8de3e8b7
+            client-secret: J7K60u0BCU0xWXtAXbCHiKcHbzgSEkEO
+          naver:
+            client-id: UlOvgcfnJwbDR074rXw_
+            client-secret: xC4n1elV4e
 
 logging:
   level:
