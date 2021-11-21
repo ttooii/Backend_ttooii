@@ -1,6 +1,7 @@
 package com.toyproject.realty.controller;
 
 import com.toyproject.realty.dto.MemberDto;
+import com.toyproject.realty.entity.Member;
 import com.toyproject.realty.service.MemberService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
@@ -10,11 +11,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.ArrayList;
+
 @Controller
 @AllArgsConstructor
 @Api(tags = {"회원가입 로그인 API"})
 public class MemberController {
     private MemberService userService;
+
+    @GetMapping("/user/signup")
+    public String createUserForm(Model model){
+        model.addAttribute("userForm",new MemberDto());
+        return "/signup";
+    }
 
     @ApiOperation(value = "회원가입")
     @ApiImplicitParams({
@@ -23,12 +33,6 @@ public class MemberController {
             @ApiImplicitParam(name = "name", value = "닉네임", required = true),
             @ApiImplicitParam(name = "email", value = "이메일", required = true),
             @ApiImplicitParam(name = "phone", value = "휴대폰번호", required = true)})
-    @GetMapping("/user/signup")
-    public String createUserForm(Model model){
-        model.addAttribute("userForm",new MemberDto());
-        return "/signup";
-    }
-
     @PostMapping("/user/signup")
     public String createUser(@Valid MemberDto memberDto, BindingResult result){
         if(result.hasErrors()){
@@ -53,7 +57,7 @@ public class MemberController {
     @ApiOperation(value = "로그인결과 페이지")
     @GetMapping("/user/login/result")
     public String dispLoginResult() {
-        return "/loginSuccess";
+        return "redirect:/";
     }
 
     // 로그아웃 결과 페이지
@@ -83,4 +87,34 @@ public class MemberController {
     public String dispAdmin() {
         return "/admin";
     }
+
+    /*
+    @GetMapping("/user/wishlist")
+    public String wishList(Principal principal,
+                           Model model){
+        if(principal != null) {
+            Member member = userService.findByUserId(principal.getName());
+            List<Wish> wishList = wishService.findMyWishList(account.getId());
+            List<Product> products = new ArrayList<>();
+            for(Wish w : wishList){
+                products.add(productService.findByIdProduct(w.getProduct().getId()));
+            }
+            model.addAttribute("products",products);
+        }
+        return "users/wishlist";
+    }
+
+    @GetMapping(value="/user/myorders")
+    public String myOrders(Principal principal,
+                           Model model){
+        if(principal == null){
+            model.addAttribute("message","회원만 접근하실수 있습니다");
+        }
+
+        List<Order> orders = orderService.findMyOrderList(principal.getName());
+        model.addAttribute("orders",orders);
+        System.out.println(principal.getName());
+        return "users/myorders";
+    }
+     */
 }

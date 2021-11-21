@@ -1,5 +1,8 @@
-package com.toyproject.realty.entity;
+package com.toyproject.realty.repository;
 
+import com.toyproject.realty.entity.Member;
+import com.toyproject.realty.entity.ProviderType;
+import com.toyproject.realty.entity.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

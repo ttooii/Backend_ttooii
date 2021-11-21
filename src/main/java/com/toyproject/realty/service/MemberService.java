@@ -36,19 +36,19 @@ public class MemberService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Optional<Member> memberWrapper = userRepository.findByEmail(userEmail);
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        Optional<Member> memberWrapper = userRepository.findByuserId(userId);
         Member member = memberWrapper.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (("admin@example.com").equals(userEmail)) {
+        if (("admin@example.com").equals(userId)) {
             authorities.add(new SimpleGrantedAuthority(RoleType.ADMIN.getCode()));
         } else {
             authorities.add(new SimpleGrantedAuthority(RoleType.USER.getCode()));
         }
 
-        return new User(member.getEmail(), member.getPassword(), authorities);
+        return new User(member.getUserId(), member.getPassword(), authorities);
     }
 
     @Transactional

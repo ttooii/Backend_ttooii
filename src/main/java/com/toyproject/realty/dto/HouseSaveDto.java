@@ -5,7 +5,7 @@ import lombok.Builder;
 
 public class HouseSaveDto {
 
-    private Long houseId;
+    private String houseId;
     private String transactionType;
     private Float exclusiveArea;
     private int floor;
@@ -22,13 +22,16 @@ public class HouseSaveDto {
     private int parkingCount;
     private String purpose;
     private int confirmation;
+    private String location;
+    private String serviceType;
+    private int monthlyExpenses;
 
 
     public House toEntity() {
         return House.builder()
                 .houseId(houseId)
                 .transactionType(transactionType)
-                .exclusiveArea(exclusiveArea)
+                .landArea(landArea)
                 .floor(floor)
                 .totalFloor(totalFloor)
                 .marketValue(marketValue)
@@ -43,14 +46,17 @@ public class HouseSaveDto {
                 .parkingCount(parkingCount)
                 .purpose(purpose)
                 .confirmation(confirmation)
+                .location(location)
+                .serviceType(serviceType)
+                .monthlyExpenses(monthlyExpenses)
                 .build();
     }
 
     @Builder
-    public HouseSaveDto(Long houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation) {
+    public HouseSaveDto() {
         this.houseId = houseId;
         this.transactionType = transactionType;
-        this.exclusiveArea = exclusiveArea;
+        this.landArea = landArea;
         this.floor = floor;
         this.totalFloor = totalFloor;
         this.marketValue = marketValue;
@@ -65,5 +71,8 @@ public class HouseSaveDto {
         this.parkingCount = parkingCount;
         this.purpose = purpose;
         this.confirmation = confirmation;
+        this.location = location;
+        this.serviceType = serviceType;
+        this.monthlyExpenses = monthlyExpenses;
     }
 }

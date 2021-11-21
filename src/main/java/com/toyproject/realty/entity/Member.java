@@ -7,6 +7,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,15 +16,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "MEMBER")
-public class Member {
+public class Member extends BaseTimeEntity{
 
     @Id
     @Column(name = "user_id", length = 20, unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private String userId;
 
-    @Column(name = "nickname", length = 20)
+    @Column(name = "username", length = 20)
     @NotNull
     private String username;
 
@@ -41,13 +42,14 @@ public class Member {
 
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @ColumnDefault("LOCAL")
     private ProviderType providerType;
 
     @Column(name = "ROLE_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @ColumnDefault("ROLE_USER")
     private RoleType roleType;
+
 
 //    @Column(name = "CREATED_AT")
 //    @NotNull
@@ -58,9 +60,11 @@ public class Member {
 //    private LocalDateTime modifiedAt;
 
     @Column(name = "deletion")
-    @NotNull
     @ColumnDefault("N")
     private String deletion;
+
+    @OneToMany(mappedBy = "member")
+    private List<House> houses = new ArrayList<>();
 
     @Builder
     public Member(String userId,String email, String username, String phone, String password){
