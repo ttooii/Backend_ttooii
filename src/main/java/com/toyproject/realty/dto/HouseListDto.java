@@ -29,7 +29,7 @@ public class HouseListDto {
     private String location;
     private String serviceType;
     private int monthlyExpenses;
-
+    private String registrant;
 
     public House toEntity() {
         return House.builder()
@@ -54,11 +54,13 @@ public class HouseListDto {
                 .location(location)
                 .serviceType(serviceType)
                 .monthlyExpenses(monthlyExpenses)
+                .registrant(registrant)
                 .build();
     }
 
     @Builder
-    public HouseListDto(String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval, String location, String serviceType, int monthlyExpenses) {
+    public HouseListDto(String registrant,String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval, String location, String serviceType, int monthlyExpenses) {
+        this.registrant=registrant;
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.exclusiveArea = exclusiveArea;

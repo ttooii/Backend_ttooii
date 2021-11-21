@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,11 +50,17 @@ public class HouseController {
                     @ApiImplicitParam(name = "heatingSystem", value = "난방 시스템", required = true),
                     @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true)})
     @PostMapping("/house/add")
-    public String createHouse(@Valid HouseSaveDto houseSaveDto, BindingResult result) {
+    public String createHouse(@Valid HouseSaveDto houseSaveDto, BindingResult result, Authentication authentication) {
         if(result.hasErrors()){
+
             return "/houseAdd";
         }
-
+        if(authentication.getName().length()>20){
+            houseSaveDto.setRegistrant(authentication.getName().substring(0,19));
+        }
+        else{
+            houseSaveDto.setRegistrant(authentication.getName());
+        }
         houseService.save(houseSaveDto);
         return "redirect:/";
     }

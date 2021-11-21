@@ -113,6 +113,10 @@ public class House {
     @NotNull
     private int monthlyExpenses;
 
+    @Column(name="registrant")
+    @NotNull
+    private String registrant;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Member member;
@@ -122,7 +126,8 @@ public class House {
     private List<Wishlist> wishlistList;
 
     @Builder
-    public House(String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String serviceType, String location, int monthlyExpenses) {
+    public House(String registrant,String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String serviceType, String location, int monthlyExpenses) {
+        this.registrant=registrant;
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.floor = floor;

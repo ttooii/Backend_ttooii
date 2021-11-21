@@ -2,7 +2,11 @@ package com.toyproject.realty.dto;
 
 import com.toyproject.realty.entity.House;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class HouseSaveDto {
 
     private String houseId;
@@ -25,7 +29,7 @@ public class HouseSaveDto {
     private String location;
     private String serviceType;
     private int monthlyExpenses;
-
+    private String registrant;
 
     public House toEntity() {
         return House.builder()
@@ -49,6 +53,7 @@ public class HouseSaveDto {
                 .location(location)
                 .serviceType(serviceType)
                 .monthlyExpenses(monthlyExpenses)
+                .registrant(registrant)
                 .build();
     }
 
@@ -74,5 +79,6 @@ public class HouseSaveDto {
         this.location = location;
         this.serviceType = serviceType;
         this.monthlyExpenses = monthlyExpenses;
+        this.registrant=registrant;
     }
 }
