@@ -9,10 +9,8 @@ public class HouseListDto {
 
     private String houseId;
     private String transactionType;
-    private Float exclusiveArea;
     private int floor;
     private int totalFloor;
-    private int marketValue;
     private int roomCount;
     private int administrationCost;
     private int bathroomCount;
@@ -20,7 +18,6 @@ public class HouseListDto {
     private String heatingSystem;
     private String title;
     private String content;
-    private int landArea;
     private int parkingCount;
     private String purpose;
     private int confirmation;
@@ -30,14 +27,13 @@ public class HouseListDto {
     private String serviceType;
     private int monthlyExpenses;
     private String registrant;
+    private float landArea;
 
     public House toEntity() {
         return House.builder()
                 .transactionType(transactionType)
-                .exclusiveArea(exclusiveArea)
                 .floor(floor)
                 .totalFloor(totalFloor)
-                .marketValue(marketValue)
                 .roomCount(roomCount)
                 .administrationCost(administrationCost)
                 .bathroomCount(bathroomCount)
@@ -59,14 +55,12 @@ public class HouseListDto {
     }
 
     @Builder
-    public HouseListDto(String registrant,String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval, String location, String serviceType, int monthlyExpenses) {
+    public HouseListDto(String registrant,String houseId, String transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String title, String content, float landArea, int parkingCount, String purpose, int confirmation, String movesInDates, Date completionApproval, String location, String serviceType, int monthlyExpenses) {
         this.registrant=registrant;
         this.houseId = houseId;
         this.transactionType = transactionType;
-        this.exclusiveArea = exclusiveArea;
         this.floor = floor;
         this.totalFloor = totalFloor;
-        this.marketValue = marketValue;
         this.roomCount = roomCount;
         this.administrationCost = administrationCost;
         this.bathroomCount = bathroomCount;

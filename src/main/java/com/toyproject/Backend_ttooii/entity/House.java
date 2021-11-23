@@ -85,7 +85,7 @@ public class House {
 
     @Column(name = "land_area")
     @NotNull
-    private int landArea;
+    private float landArea;
 
     @Column(name = "parking_count")
     @NotNull
@@ -124,13 +124,12 @@ public class House {
     private List<Wishlist> wishlistList;
 
     @Builder
-    public House(String registrant,String houseId, String transactionType, Float exclusiveArea, int floor, int totalFloor, int marketValue, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, int landArea, int parkingCount, String purpose, int confirmation, String serviceType, String location, int monthlyExpenses) {
+    public House(String registrant,String houseId, String transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int bathroomCount, String direction, String heatingSystem, String movesInDates, Date completionApproval, int hit, int wishCount, String title, String content, float landArea, int parkingCount, String purpose, int confirmation, String serviceType, String location, int monthlyExpenses, Member member) {
         this.registrant=registrant;
         this.houseId = houseId;
         this.transactionType = transactionType;
         this.floor = floor;
         this.totalFloor = totalFloor;
-        this.marketValue = marketValue;
         this.roomCount = roomCount;
         this.administrationCost = administrationCost;
         this.bathroomCount = bathroomCount;
@@ -149,5 +148,6 @@ public class House {
         this.serviceType = serviceType;
         this.location = location;
         this.monthlyExpenses = monthlyExpenses;
+        this.member = member;
     }
 }
