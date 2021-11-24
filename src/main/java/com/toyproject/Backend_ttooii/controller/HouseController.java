@@ -62,6 +62,7 @@ public class HouseController {
             houseSaveDto.setRegistrant(authentication.getName());
         }
         houseService.save(houseSaveDto);
+
         return "redirect:/";
     }
 
