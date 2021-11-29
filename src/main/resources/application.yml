@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/example?serverTimezone=UTC&characterEncoding=UTF-8
-    username: kiot
-    password: zpdliot1!
+    url: jdbc:mysql://localhost:3306/realty?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: rootroot
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -21,11 +21,11 @@ spring:
       client:
         registration:
           kakao:
-            client-id: kakao client ID
-            client-secret: kakao client KEY
+            client-id: 351b03d10108845002f9d13d8de3e8b7
+            client-secret: J7K60u0BCU0xWXtAXbCHiKcHbzgSEkEO
           naver:
-            client-id: naver client ID
-            client-secret: naver client KEY
+            client-id: UlOvgcfnJwbDR074rXw_
+            client-secret: xC4n1elV4e
 
 logging:
   level:
