@@ -55,8 +55,6 @@ public class HouseService {
                     .content(houseEntity.getContent())
                     .landArea(houseEntity.getLandArea())
                     .parkingCount(houseEntity.getParkingCount())
-                    .purpose(houseEntity.getPurpose())
-                    .confirmation(houseEntity.getConfirmation())
                     .serviceType(houseEntity.getServiceType())
                     .monthlyExpenses(houseEntity.getMonthlyExpenses())
                     .build();

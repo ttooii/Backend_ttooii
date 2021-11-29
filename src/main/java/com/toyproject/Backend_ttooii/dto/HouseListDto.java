@@ -19,8 +19,6 @@ public class HouseListDto {
     private String title;
     private String content;
     private int parkingCount;
-    private String purpose;
-    private int confirmation;
     private String movesInDates;
     private Date completionApproval;
     private String location;
@@ -31,6 +29,7 @@ public class HouseListDto {
 
     public House toEntity() {
         return House.builder()
+                .houseId(houseId)
                 .transactionType(transactionType)
                 .floor(floor)
                 .totalFloor(totalFloor)
@@ -43,8 +42,6 @@ public class HouseListDto {
                 .content(content)
                 .landArea(landArea)
                 .parkingCount(parkingCount)
-                .purpose(purpose)
-                .confirmation(confirmation)
                 .movesInDates(movesInDates)
                 .completionApproval(completionApproval)
                 .location(location)
@@ -70,8 +67,6 @@ public class HouseListDto {
         this.content = content;
         this.landArea = landArea;
         this.parkingCount = parkingCount;
-        this.purpose = purpose;
-        this.confirmation = confirmation;
         this.movesInDates = movesInDates;
         this.completionApproval = completionApproval;
         this.location = location;

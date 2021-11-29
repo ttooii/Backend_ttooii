@@ -39,6 +39,10 @@ public class Member extends BaseTimeEntity{
     @NotNull
     private String phone;
 
+    @Column(name = "address", length = 50)
+    @NotNull
+    private String address;
+
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
     @ColumnDefault("LOCAL")
@@ -66,11 +70,15 @@ public class Member extends BaseTimeEntity{
     private List<House> houses = new ArrayList<>();
 
     @Builder
-    public Member(String userId,String email, String username, String phone, String password){
+    public Member(String userId,String email, String username, String phone, String password, ProviderType providerType, RoleType roleType, String address, String deletion){
         this.userId = userId;
         this.email = email;
         this.username = username;
         this.phone = phone;
         this.password = password;
+        this.providerType = providerType;
+        this.roleType = roleType;
+        this.address = address;
+        this.deletion = deletion;
     }
 }
