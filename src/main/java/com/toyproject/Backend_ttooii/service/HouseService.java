@@ -3,8 +3,12 @@ package com.toyproject.Backend_ttooii.service;
 import com.toyproject.Backend_ttooii.dto.HouseListDto;
 import com.toyproject.Backend_ttooii.dto.HouseSaveDto;
 import com.toyproject.Backend_ttooii.entity.House;
+import com.toyproject.Backend_ttooii.entity.Inclusive;
 import com.toyproject.Backend_ttooii.repository.HouseRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,9 @@ import java.util.List;
 public class HouseService {
 
     private HouseRepository houseRepository;
+
+    private static final int BLOCK_PAGE_NUM_COUNT = 8;
+    private static final int PAGE_HOUSE_COUNT = 8;
 
     @Transactional
     public String createHouse(HouseListDto houseDto) {
@@ -31,46 +38,78 @@ public class HouseService {
         return houseRepository.updateHit(houseId);
     }
 
-//    public Object getHouseList(Pageable pageable) {
-//
-//    }
-//
     @Transactional
-    public List<HouseListDto> getHouseList() {
-        List<House> houseEntities = houseRepository.findAll();
+    public String save(HouseSaveDto requestDto) {
+
+        return houseRepository.save(requestDto.toEntity()).getHouseId();
+    }
+
+    @Transactional
+    public List<HouseListDto> getHouseList(Integer pageNum) {
+        Page<House> page = houseRepository.findAll(PageRequest.of(
+                pageNum - 1, PAGE_HOUSE_COUNT, Sort.by(Sort.Direction.ASC, "houseId")
+        ));
+
+        List<House> houses = page.getContent();
         List<HouseListDto> houseDtoList = new ArrayList<>();
 
-        for(House houseEntity : houseEntities) {
-            HouseListDto houseDto = HouseListDto.builder()
-                    .houseId(houseEntity.getHouseId())
-                    .transactionType(houseEntity.getTransactionType())
-                    .floor(houseEntity.getFloor())
-                    .totalFloor(houseEntity.getTotalFloor())
-                    .roomCount(houseEntity.getRoomCount())
-                    .administrationCost(houseEntity.getAdministrationCost())
-                    .bathroomCount(houseEntity.getBathroomCount())
-                    .direction(houseEntity.getDirection())
-                    .heatingSystem(houseEntity.getHeatingSystem())
-                    .title(houseEntity.getTitle())
-                    .content(houseEntity.getContent())
-                    .landArea(houseEntity.getLandArea())
-                    .parkingCount(houseEntity.getParkingCount())
-                    .purpose(houseEntity.getPurpose())
-                    .confirmation(houseEntity.getConfirmation())
-                    .serviceType(houseEntity.getServiceType())
-                    .monthlyExpenses(houseEntity.getMonthlyExpenses())
-                    .build();
-
-            houseDtoList.add(houseDto);
+        for (House house : houses) {
+            houseDtoList.add(this.convertEntityToDto(house));
         }
 
         return houseDtoList;
     }
 
-    @Transactional
-    public String save(HouseSaveDto requestDto) {
+    public Long getHouseCount() {
 
-        return houseRepository.save(requestDto.toEntity()).getHouseId();
+        return houseRepository.count();
+    }
+
+    public Integer[] getPageList(Integer curPageNum) {
+        Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
+
+        // 총 매물 수
+        Double housesTotalCount = Double.valueOf(this.getHouseCount());
+
+        // 총 매물 기준으로 계산한 마지막 페이지 번호 계산
+        Integer totalLastPageNum = (int) (Math.ceil(housesTotalCount / PAGE_HOUSE_COUNT));
+
+        // 현재 페이지 기준으로 계산한 마지막 페이지 번호 계산
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
+                ? curPageNum + BLOCK_PAGE_NUM_COUNT
+                : totalLastPageNum;
+
+        curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
+
+        for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
+
+            pageList[idx] = val;
+        }
+
+        return pageList;
+    }
+
+    @Transactional
+    public HouseListDto getHouseId(String houseId) {
+        House house = houseRepository.findById(houseId).get();
+
+        HouseListDto houseListDto = HouseListDto.builder()
+                .houseId(house.getHouseId())
+                .transactionType(house.getTransactionType())
+                .floor(house.getFloor())
+                .totalFloor(house.getTotalFloor())
+                .roomCount(house.getRoomCount())
+                .administrationCost(house.getAdministrationCost())
+                .direction(house.getDirection())
+                .title(house.getTitle())
+                .content(house.getContent())
+                .landArea(house.getLandArea())
+                .location(house.getLocation())
+                .serviceType(house.getServiceType())
+                .monthlyExpenses(house.getMonthlyExpenses())
+                .build();
+
+        return houseListDto;
     }
 
     public List<HouseListDto> searchLocationHouse(String keyword) {
@@ -134,20 +173,13 @@ public class HouseService {
                 .totalFloor(houseEntity.getTotalFloor())
                 .roomCount(houseEntity.getRoomCount())
                 .administrationCost(houseEntity.getAdministrationCost())
-                .bathroomCount(houseEntity.getBathroomCount())
                 .direction(houseEntity.getDirection())
-                .heatingSystem(houseEntity.getHeatingSystem())
                 .title(houseEntity.getTitle())
                 .content(houseEntity.getContent())
                 .landArea(houseEntity.getLandArea())
-                .parkingCount(houseEntity.getParkingCount())
-                .purpose(houseEntity.getPurpose())
-                .confirmation(houseEntity.getConfirmation())
                 .location(houseEntity.getLocation())
                 .serviceType(houseEntity.getServiceType())
                 .monthlyExpenses(houseEntity.getMonthlyExpenses())
                 .build();
     }
-
-
 }

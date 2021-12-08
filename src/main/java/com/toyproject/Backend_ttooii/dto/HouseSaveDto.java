@@ -1,6 +1,7 @@
 package com.toyproject.Backend_ttooii.dto;
 
 import com.toyproject.Backend_ttooii.entity.House;
+import com.toyproject.Backend_ttooii.entity.Inclusive;
 import com.toyproject.Backend_ttooii.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,23 +12,24 @@ import lombok.Setter;
 public class HouseSaveDto {
 
     private String houseId;
-    private String transactionType;
+    private String direction;
+    private String title;
+    private String content;
+    private String location;
+    private String registrant;
+    private Member member;
+    private Inclusive inclusive;
     private float landArea;
     private int floor;
     private int totalFloor;
     private int deposit;
     private int administrationCost;
-    private int bathroomCount;
-    private String direction;
-    private String heatingSystem;
-    private String title;
-    private String content;
     private int parkingCount;
-    private String location;
-    private String serviceType;
+    private int bathroomCount;
     private int monthlyExpenses;
-    private Member member;
-    private String registrant;
+    private int heatingSystem;
+    private int transactionType;
+    private int serviceType;
 
     public House toEntity() {
         return House.builder()
@@ -38,16 +40,15 @@ public class HouseSaveDto {
                 .administrationCost(administrationCost)
                 .bathroomCount(bathroomCount)
                 .direction(direction)
-                .heatingSystem(heatingSystem)
                 .title(title)
                 .content(content)
                 .landArea(landArea)
-                .parkingCount(parkingCount)
                 .location(location)
                 .serviceType(serviceType)
                 .monthlyExpenses(monthlyExpenses)
                 .member(member)
                 .registrant(registrant)
+                .inclusive(inclusive)
                 .build();
     }
 
@@ -71,5 +72,6 @@ public class HouseSaveDto {
         this.monthlyExpenses = monthlyExpenses;
         this.member = member;
         this.registrant = registrant;
+        this.inclusive = inclusive;
     }
 }

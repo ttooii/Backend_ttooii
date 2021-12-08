@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class HouseController {
 
@@ -67,16 +67,28 @@ public class HouseController {
     }
 
     @ApiOperation(value = "방 목록 조회", notes = "성공 시 방 목록 조회에 성공합니다.")
-    @GetMapping("/house/list")
-    public String list(Model model) {
-        List<HouseListDto> houseList = houseService.getHouseList();
+    @GetMapping(value = "/house/list", produces = "application/json; charset=utf8")
+    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+        List<HouseListDto> houseList = houseService.getHouseList(pageNum);
+        Integer[] pageList = houseService.getPageList(pageNum);
 
         model.addAttribute("houseList", houseList);
+        model.addAttribute("pageList", pageList);
+
         return "houselist.html";
     }
 
+    // houseId 당 조회
+    @GetMapping(value = "/house/{id}", produces = "application/json; charset=utf8")
+    public String detail(@PathVariable("id") String houseId, Model model) {
+        HouseListDto houseListDto = houseService.getHouseId(houseId);
+        model.addAttribute("post", houseListDto);
+
+        return "housedetail.html";
+    }
+
     // 지역으로 방 목록 조회
-    @GetMapping("/house/addressSearch")
+    @GetMapping(value = "/house/addressSearch", produces = "application/json; charset=utf8")
     public String addressSearch(@RequestParam(value = "address", required = false) String address, Model model) {
 
         List<HouseListDto> houseListDtoList = new ArrayList<HouseListDto>();
@@ -89,7 +101,7 @@ public class HouseController {
 
 
     // 옵션으로 방 목록 조회
-    @GetMapping("/house/optionSearch")
+    @GetMapping(value = "/house/optionSearch", produces = "application/json; charset=utf8")
     public String optionSearch(
             @RequestParam(value = "option1", required = false) String option1,
             @RequestParam(value = "option2", required = false) String option2,
