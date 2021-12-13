@@ -4,11 +4,12 @@ import com.toyproject.Backend_ttooii.dto.MemberDto;
 import com.toyproject.Backend_ttooii.service.MemberService;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Controller
@@ -18,7 +19,7 @@ public class MemberController {
     private MemberService userService;
 
     @GetMapping("/user/signup")
-    public String createUserForm(Model model){
+    public String createdUserForm(Model model){
         model.addAttribute("userForm",new MemberDto());
         return "/signup";
     }
@@ -30,8 +31,8 @@ public class MemberController {
             @ApiImplicitParam(name = "name", value = "닉네임", required = true),
             @ApiImplicitParam(name = "email", value = "이메일", required = true),
             @ApiImplicitParam(name = "phone", value = "휴대폰번호", required = true)})
-    @PostMapping("/user/signup")
-    public String createUser(@Valid MemberDto memberDto, BindingResult result){
+    @RequestMapping(value = "/user/signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String createUser(@RequestBody @Valid MemberDto memberDto, BindingResult result){
         if(result.hasErrors()){
             return "/signup";
         }

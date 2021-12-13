@@ -24,11 +24,12 @@ public class SocialMemberDto {
     private String username;
     private String email;
     private String password;
+    private String deletion;
     private ProviderType providerType;
     private RoleType roleType;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private  String deletion;
+
     public Member toEntity() {
         return Member.builder()
                 .userId(userId)
@@ -38,8 +39,8 @@ public class SocialMemberDto {
                 .password(password)
                 .providerType(providerType)
                 .roleType(roleType)
-                .deletion(deletion)
                 .address(address)
+                .deletion(deletion)
                 .build();
     }
 
