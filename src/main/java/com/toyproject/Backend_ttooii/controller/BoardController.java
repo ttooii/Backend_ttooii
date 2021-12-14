@@ -81,6 +81,7 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+
     @ApiOperation(value="공지사항 no.글 삭제")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "BoardDto", value = "공지사항 정보"),

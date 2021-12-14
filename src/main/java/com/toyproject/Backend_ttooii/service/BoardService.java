@@ -51,8 +51,6 @@ public class BoardService {
                 .writer(boardEntity.getWriter())
                 .build();
     }
-
-
     @Transactional
     public void deletePost(Long id) {
         boardRepository.deleteById(id);

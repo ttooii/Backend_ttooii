@@ -21,7 +21,6 @@ public class Board extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-
     @Builder
     public Board(Long board_id, String title, String content, String writer) {
         this.board_id = board_id;

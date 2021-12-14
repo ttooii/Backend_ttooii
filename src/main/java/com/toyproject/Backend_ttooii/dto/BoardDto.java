@@ -28,6 +28,7 @@ public class BoardDto {
         return board;
     }
 
+
     @Builder
     public BoardDto(Long board_id, String title, String content, String writer, LocalDateTime created_at, LocalDateTime modified_at) {
         this.board_id =board_id;
