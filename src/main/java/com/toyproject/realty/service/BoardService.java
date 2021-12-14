@@ -25,7 +25,7 @@ public class BoardService {
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (Board board : boards) {
             BoardDto boardDto = BoardDto.builder()
-                    .id(board.getId())
+                    .board_id(board.getBoard_id())
                     .title(board.getTitle())
                     .content(board.getContent())
                     .writer(board.getWriter())
@@ -37,7 +37,7 @@ public class BoardService {
     }
     @Transactional
     public Long savePost(BoardDto BoardDto ) {
-        return boardRepository.save(BoardDto.toEntity()).getId();
+        return boardRepository.save(BoardDto.toEntity()).getBoard_id();
     }
     @Transactional
     public BoardDto getPost(Long id) {
@@ -45,7 +45,7 @@ public class BoardService {
         Board boardEntity = BoardWrapper.get();
 
         return BoardDto.builder()
-                .id(boardEntity.getId())
+                .board_id(boardEntity.getBoard_id())
                 .title(boardEntity.getTitle())
                 .content(boardEntity.getContent())
                 .writer(boardEntity.getWriter())
