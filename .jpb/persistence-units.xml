@@ -4,7 +4,7 @@
     <persistence-units>
       <persistence-unit name="Default">
         <packages>
-          <package value="com.toyproject.realty" />
+          <package value="com.toyproject.Backend_ttooii" />
         </packages>
       </persistence-unit>
     </persistence-units>
