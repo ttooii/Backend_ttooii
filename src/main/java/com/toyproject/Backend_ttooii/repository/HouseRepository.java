@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HouseRepository extends JpaRepository<House, Long> {
+public interface HouseRepository extends JpaRepository<House, String> {
 
     @Modifying
     @Query("update House h set h.hit = h.hit + 1 where h.houseId = :houseId")

@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class HouseController {
 
@@ -32,22 +32,23 @@ public class HouseController {
 
     @ApiOperation(value = "방 등록", notes = "성공 시 방 등록에 성공합니다.")
     @ApiImplicitParams(
-            {@ApiImplicitParam(name = "title", value = "제목", required = true),
-                    @ApiImplicitParam(name = "content", value = "내용", required = true),
-                    @ApiImplicitParam(name = "transactionType", value = "거래 유형", required = true),
-                    @ApiImplicitParam(name = "purpose", value = "목적", required = true),
-                    @ApiImplicitParam(name = "marketValue", value = "가격", required = true),
-                    @ApiImplicitParam(name = "administrationCost", value = "관리비", required = true),
-                    @ApiImplicitParam(name = "landArea", value = "면", required = true),
-                    @ApiImplicitParam(name = "roomCount", value = "방 개수", required = true),
-                    @ApiImplicitParam(name = "administrationCost", value = "관리비", required = true),
-                    @ApiImplicitParam(name = "floor", value = "층", required = true),
-                    @ApiImplicitParam(name = "totalFloor", value = "전체 층", required = true),
-                    @ApiImplicitParam(name = "bathroomCount", value = "화장실 개수", required = true),
-                    @ApiImplicitParam(name = "direction", value = "방향", required = true),
-                    @ApiImplicitParam(name = "heatingSystem", value = "난방 시스템", required = true),
-                    @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true),
-                    @ApiImplicitParam(name = "registrant", value = "등록한 중개자 ID", required = true)})
+            {@ApiImplicitParam(name = "title", value = "제목", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "content", value = "내용", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "serviceType", value = "건물 종류", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "location", value = "주소", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "transactionType", value = "거래 종류", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "deposit", value = "보증금", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "monthlyExpenses", value = "월세", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "landArea", value = "건물 크기", required = true, dataType = "float"),
+                    @ApiImplicitParam(name = "heatingSystem", value = "난방 종류", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "movesInDates", value = "입주 가능일", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "floor", value = "전체 층수", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "totalFloor", value = "건물 층수", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "administrationCost", value = "관리비", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "bathroomCount", value = "화장실 개수", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "parkingCount", value = "주차장 개수", required = true, dataType = "int"),
+                    @ApiImplicitParam(name = "direction", value = "집 방향", required = true, dataType = "string"),
+                    @ApiImplicitParam(name = "member", value = "등록한 중개자 ID", required = true, dataType = "string")})
     @PostMapping("/house/add")
     public String createHouse(@Valid HouseSaveDto houseSaveDto, BindingResult result, Authentication authentication) {
         if(result.hasErrors()){
@@ -61,20 +62,33 @@ public class HouseController {
             houseSaveDto.setRegistrant(authentication.getName());
         }
         houseService.save(houseSaveDto);
+
         return "redirect:/";
     }
 
     @ApiOperation(value = "방 목록 조회", notes = "성공 시 방 목록 조회에 성공합니다.")
-    @GetMapping("/house/list")
-    public String list(Model model) {
-        List<HouseListDto> houseList = houseService.getHouseList();
+    @GetMapping(value = "/house/list", produces = "application/json; charset=utf8")
+    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+        List<HouseListDto> houseList = houseService.getHouseList(pageNum);
+        Integer[] pageList = houseService.getPageList(pageNum);
 
         model.addAttribute("houseList", houseList);
+        model.addAttribute("pageList", pageList);
+
         return "houselist.html";
     }
 
+    // houseId 당 조회
+    @GetMapping(value = "/house/{id}", produces = "application/json; charset=utf8")
+    public String detail(@PathVariable("id") String houseId, Model model) {
+        HouseListDto houseListDto = houseService.getHouseId(houseId);
+        model.addAttribute("post", houseListDto);
+
+        return "housedetail.html";
+    }
+
     // 지역으로 방 목록 조회
-    @GetMapping("/house/addressSearch")
+    @GetMapping(value = "/house/addressSearch", produces = "application/json; charset=utf8")
     public String addressSearch(@RequestParam(value = "address", required = false) String address, Model model) {
 
         List<HouseListDto> houseListDtoList = new ArrayList<HouseListDto>();
@@ -87,7 +101,7 @@ public class HouseController {
 
 
     // 옵션으로 방 목록 조회
-    @GetMapping("/house/optionSearch")
+    @GetMapping(value = "/house/optionSearch", produces = "application/json; charset=utf8")
     public String optionSearch(
             @RequestParam(value = "option1", required = false) String option1,
             @RequestParam(value = "option2", required = false) String option2,

@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "MEMBER")
-public class Member extends BaseTimeEntity {
+public class Member extends BaseTimeEntity{
 
     @Id
     @Column(name = "user_id", length = 20, unique = true)
@@ -70,7 +70,10 @@ public class Member extends BaseTimeEntity {
     private List<House> houses = new ArrayList<>();
 
     @Builder
-    public Member(String userId,String email, String username, String phone, String password, ProviderType providerType, RoleType roleType, String address, String deletion){
+    public Member(
+            String userId,String email, String username, String phone, String password, String address, String deletion,
+            ProviderType providerType, RoleType roleType){
+
         this.userId = userId;
         this.email = email;
         this.username = username;
