@@ -5,6 +5,7 @@ import com.toyproject.Backend_ttooii.entity.Notice;
 import com.toyproject.Backend_ttooii.repository.MemberRepository;
 import com.toyproject.Backend_ttooii.repository.NoticeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,9 +36,21 @@ public class NoticeService {
         return noticeDtoList;
     }
     @Transactional
-    public Long savePost(NoticeDto noticeDto ) {
+    public Long savePost(NoticeDto noticeDto, Authentication authentication) {
+        if(authentication.getName().length()>20){
+            noticeDto.setWriter(authentication.getName().substring(0,19));
+        }
+        else{
+            noticeDto.setWriter(authentication.getName());
+        }
         return noticeRepository.save(noticeDto.toEntity()).getId();
     }
+
+    @Transactional
+    public Long updatePost(NoticeDto noticeDto){
+        return  noticeRepository.save(noticeDto.toEntity()).getId();
+    }
+
     @Transactional
     public NoticeDto getPost(Long id) {
         Optional<Notice> noticeWrapper = noticeRepository.findById(id);
