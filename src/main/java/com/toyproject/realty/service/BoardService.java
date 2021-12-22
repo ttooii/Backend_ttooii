@@ -1,10 +1,10 @@
 package com.toyproject.realty.service;
 
+import com.toyproject.Backend_ttooii.repository.MemberRepository;
 import com.toyproject.realty.dto.BoardDto;
 import com.toyproject.realty.entity.Board;
 import com.toyproject.realty.repository.BoardRepository;
-
-import com.toyproject.realty.repository.MemberRepository;
+// import com.toyproject.realty.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

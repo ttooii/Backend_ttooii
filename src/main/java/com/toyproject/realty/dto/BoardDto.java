@@ -1,7 +1,7 @@
 package com.toyproject.realty.dto;
 
 import com.toyproject.realty.entity.Board;
-import com.toyproject.realty.entity.Notice;
+import com.toyproject.Backend_ttooii.entity.Notice;
 import lombok.*;
 
 import java.time.LocalDateTime;

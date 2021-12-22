@@ -2,11 +2,13 @@ package com.toyproject.Backend_ttooii.controller;
 
 import com.toyproject.Backend_ttooii.dto.HouseListDto;
 import com.toyproject.Backend_ttooii.dto.HouseSaveDto;
+import com.toyproject.Backend_ttooii.entity.House;
 import com.toyproject.Backend_ttooii.service.HouseService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,14 +70,17 @@ public class HouseController {
 
     @ApiOperation(value = "방 목록 조회", notes = "성공 시 방 목록 조회에 성공합니다.")
     @GetMapping(value = "/house/list", produces = "application/json; charset=utf8")
-    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    public String list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+        /*
         List<HouseListDto> houseList = houseService.getHouseList(pageNum);
         Integer[] pageList = houseService.getPageList(pageNum);
+       */
+        Page<House> houseList = houseService.getPageList(page);
+        int totalPage = houseList.getTotalPages();
+        model.addAttribute("houseList", houseList.getTotalPages());
+        model.addAttribute("totalPage", totalPage);
 
-        model.addAttribute("houseList", houseList);
-        model.addAttribute("pageList", pageList);
-
-        return "houselist.html";
+        return "houselist";
     }
 
     // houseId 당 조회

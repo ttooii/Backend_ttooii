@@ -17,7 +17,7 @@ public class Inclusive {
     @Column(name = "inclusive_id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    private String inclusiveId;
+    private Long inclusiveId;
 
     @ManyToOne
     @JoinColumn(name = "fk_house_id")

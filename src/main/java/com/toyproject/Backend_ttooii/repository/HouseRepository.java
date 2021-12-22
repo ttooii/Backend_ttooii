@@ -23,4 +23,8 @@ public interface HouseRepository extends JpaRepository<House, String> {
     List<House> findByTransactionTypeContaining(String keyword);
 
     List<House> findByMonthlyExpensesContaining(String keyword);
+
+    List<House> findAllByLandAreaBetween(float area1, float area2);
+
+    List<House> findByAdministrationCost(String keyword);
 }

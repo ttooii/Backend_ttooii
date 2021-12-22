@@ -1,5 +1,6 @@
 package com.toyproject.realty.entity;
 
+import com.toyproject.Backend_ttooii.entity.TimeEntity;
 import lombok.*;
 import javax.persistence.*;
 

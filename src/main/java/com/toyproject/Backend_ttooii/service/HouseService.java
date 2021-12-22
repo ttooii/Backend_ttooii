@@ -65,7 +65,8 @@ public class HouseService {
         return houseRepository.count();
     }
 
-    public Integer[] getPageList(Integer curPageNum) {
+    public Page<House> getPageList(int page) {
+        /*
         Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
 
         // 총 매물 수
@@ -87,6 +88,9 @@ public class HouseService {
         }
 
         return pageList;
+         */
+
+        return houseRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "houseId")));
     }
 
     @Transactional

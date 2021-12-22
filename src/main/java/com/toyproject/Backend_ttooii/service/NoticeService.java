@@ -17,6 +17,7 @@ import java.util.Optional;
 public class NoticeService {
     private NoticeRepository noticeRepository;
     private  MemberRepository memberRepository;
+
     @Transactional
     public List<NoticeDto> getNoticeList() {
         List<Notice> notices = noticeRepository.findAll();
@@ -38,6 +39,7 @@ public class NoticeService {
     public Long savePost(NoticeDto noticeDto ) {
         return noticeRepository.save(noticeDto.toEntity()).getId();
     }
+
     @Transactional
     public NoticeDto getPost(Long id) {
         Optional<Notice> noticeWrapper = noticeRepository.findById(id);
