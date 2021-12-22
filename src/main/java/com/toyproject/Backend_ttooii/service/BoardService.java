@@ -1,11 +1,10 @@
-package com.toyproject.realty.service;
+package com.toyproject.Backend_ttooii.service;
 
-import com.toyproject.Backend_ttooii.repository.MemberRepository;
-import com.toyproject.realty.dto.BoardDto;
-import com.toyproject.realty.entity.Board;
-import com.toyproject.realty.repository.BoardRepository;
-// import com.toyproject.realty.repository.MemberRepository;
+import com.toyproject.Backend_ttooii.dto.BoardDto;
+import com.toyproject.Backend_ttooii.entity.Board;
+import com.toyproject.Backend_ttooii.repository.BoardRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,7 +16,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BoardService {
     private BoardRepository boardRepository;
-    private MemberRepository memberRepository;
 
     @Transactional
     public List<BoardDto> getBoardList() {
@@ -25,7 +23,7 @@ public class BoardService {
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (Board board : boards) {
             BoardDto boardDto = BoardDto.builder()
-                    .id(board.getId())
+                    .board_id(board.getBoard_id())
                     .title(board.getTitle())
                     .content(board.getContent())
                     .writer(board.getWriter())
@@ -36,23 +34,34 @@ public class BoardService {
         return boardDtoList;
     }
     @Transactional
-    public Long savePost(BoardDto BoardDto ) {
-        return boardRepository.save(BoardDto.toEntity()).getId();
+    public Long savePost(BoardDto boardDto , Authentication authentication) {
+        if(authentication.getName().length()>20){
+            boardDto.setWriter(authentication.getName().substring(0,19));
+        }
+        else{
+            boardDto.setWriter(authentication.getName());
+        }
+        return boardRepository.save(boardDto.toEntity()).getBoard_id();
     }
+
+    @Transactional
+    public Long updatePost(BoardDto boardDto){
+        return boardRepository.save(boardDto.toEntity()).getBoard_id();
+    }
+
+
     @Transactional
     public BoardDto getPost(Long id) {
-        Optional<Board> BoardWrapper = boardRepository.findById(id);
-        Board boardEntity = BoardWrapper.get();
+        Optional<Board> boardWrapper = boardRepository.findById(id);
+        Board boardEntity = boardWrapper.get();
 
         return BoardDto.builder()
-                .id(boardEntity.getId())
+                .board_id(boardEntity.getBoard_id())
                 .title(boardEntity.getTitle())
                 .content(boardEntity.getContent())
                 .writer(boardEntity.getWriter())
                 .build();
     }
-
-
     @Transactional
     public void deletePost(Long id) {
         boardRepository.deleteById(id);

@@ -10,9 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,15 +45,7 @@ public class NoticeController {
 
     @PostMapping("/notice/write")
     public String write(NoticeDto noticeDto,Authentication authentication) {
-        if(authentication.getName().length()>20){
-            noticeDto.setWriter(authentication.getName().substring(0,19));
-        }
-        else{
-            noticeDto.setWriter(authentication.getName());
-        }
-
-        noticeService.savePost(noticeDto);
-
+        noticeService.savePost(noticeDto,authentication);
         return "redirect:/notice/list";
     }
 
@@ -66,7 +56,6 @@ public class NoticeController {
     @GetMapping("/notice/edit/{no}")
     public String edit(@PathVariable("no") Long no, Model model) {
         NoticeDto noticeDto = noticeService.getPost(no);
-
         model.addAttribute("noticeDto", noticeDto);
         System.out.println(noticeDto);
         return "/notice/update";
@@ -76,17 +65,16 @@ public class NoticeController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
-    @PostMapping("/notice/edit/{no}")
+    @PutMapping("/notice/edit/{no}")
     public String update(NoticeDto noticeDto) {
-        noticeService.savePost(noticeDto);
-
+        noticeService.updatePost(noticeDto);
         return "redirect:/notice/list";
     }
     @ApiOperation(value="공지사항 no.글 삭제")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
-    @PostMapping("/notice/{no}")
+    @DeleteMapping("/notice/{no}")
     public String delete(@PathVariable("no") Long no) {
         noticeService.deletePost(no);
         return "redirect:/notice/list";
@@ -99,7 +87,6 @@ public class NoticeController {
     @GetMapping("/notice/{no}")
     public String detail(@PathVariable("no") Long no, Model model) {
         NoticeDto noticeDto = noticeService.getPost(no);
-
         model.addAttribute("noticeDto", noticeDto);
         return "/notice/detail";
     }

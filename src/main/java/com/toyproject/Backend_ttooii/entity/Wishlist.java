@@ -1,6 +1,5 @@
 package com.toyproject.Backend_ttooii.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +19,12 @@ public class Wishlist {
     @ManyToOne
     private House house;
 
-    @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"houseList"})
-    @ManyToOne
-    private Member member;
+    @Column(name = "user_id")
+    private String user_id;
 
     @Builder
-    public Wishlist(House house, Member member) {
+    public Wishlist(House house, String user_id) {
         this.house = house;
-        this.member = member;
+        this.user_id = user_id;
     }
 }
