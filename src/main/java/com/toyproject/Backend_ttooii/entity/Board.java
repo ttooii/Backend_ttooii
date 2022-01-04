@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Board extends TimeEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long board_id;
+    private Long boardId;
 
     @Column(length = 20, nullable = false)
     private String writer;
@@ -22,8 +22,8 @@ public class Board extends TimeEntity {
     private String content;
 
     @Builder
-    public Board(Long board_id, String title, String content, String writer) {
-        this.board_id = board_id;
+    public Board(Long boardId, String title, String content, String writer) {
+        this.boardId = boardId;
         this.writer = writer;
         this.title = title;
         this.content = content;

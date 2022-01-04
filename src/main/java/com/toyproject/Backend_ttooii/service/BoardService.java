@@ -4,6 +4,9 @@ import com.toyproject.Backend_ttooii.dto.BoardDto;
 import com.toyproject.Backend_ttooii.entity.Board;
 import com.toyproject.Backend_ttooii.repository.BoardRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +19,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BoardService {
     private BoardRepository boardRepository;
+    private static final int BLOCK_PAGE_NUM_COUNT = 10;
+    private static final int PAGE_COUNT = 10;
 
     @Transactional
-    public List<BoardDto> getBoardList() {
-        List<Board> boards = boardRepository.findAll();
-        List<BoardDto> boardDtoList = new ArrayList<>();
-        for (Board board : boards) {
-            BoardDto boardDto = BoardDto.builder()
-                    .board_id(board.getBoard_id())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .writer(board.getWriter())
-                    .build();
-
-            boardDtoList.add(boardDto);
-        }
-        return boardDtoList;
+    public Page<Board> getBoardList(int page){
+        return boardRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId")));
     }
+
     @Transactional
     public Long savePost(BoardDto boardDto , Authentication authentication) {
         if(authentication.getName().length()>20){
@@ -41,12 +35,13 @@ public class BoardService {
         else{
             boardDto.setWriter(authentication.getName());
         }
-        return boardRepository.save(boardDto.toEntity()).getBoard_id();
+
+        return boardRepository.save(boardDto.toEntity()).getBoardId();
     }
 
     @Transactional
     public Long updatePost(BoardDto boardDto){
-        return boardRepository.save(boardDto.toEntity()).getBoard_id();
+        return boardRepository.save(boardDto.toEntity()).getBoardId();
     }
 
 
@@ -56,12 +51,13 @@ public class BoardService {
         Board boardEntity = boardWrapper.get();
 
         return BoardDto.builder()
-                .board_id(boardEntity.getBoard_id())
+                .boardId(boardEntity.getBoardId())
                 .title(boardEntity.getTitle())
                 .content(boardEntity.getContent())
                 .writer(boardEntity.getWriter())
                 .build();
     }
+
     @Transactional
     public void deletePost(Long id) {
         boardRepository.deleteById(id);
