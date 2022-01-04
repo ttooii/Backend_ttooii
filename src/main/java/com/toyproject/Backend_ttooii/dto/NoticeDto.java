@@ -10,16 +10,16 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class NoticeDto {
-    private Long id;
+    private Long noticeId;
     private String writer;
     private String title;
     private String content;
-    private LocalDateTime created_at;
-    private LocalDateTime modified_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     public Notice toEntity(){
         Notice notice = Notice.builder()
-                .id(id)
+                .noticeId(noticeId)
                 .writer(writer)
                 .title(title)
                 .content(content)
@@ -28,12 +28,12 @@ public class NoticeDto {
     }
 
     @Builder
-    public NoticeDto(Long id, String title, String content, String writer, LocalDateTime created_at, LocalDateTime modified_at) {
-        this.id = id;
+    public NoticeDto(Long noticeId, String title, String content, String writer, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.noticeId =noticeId;
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.created_at = created_at;
-        this.modified_at = modified_at;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
     }
 }

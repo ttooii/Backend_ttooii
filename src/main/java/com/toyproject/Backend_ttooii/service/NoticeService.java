@@ -5,6 +5,9 @@ import com.toyproject.Backend_ttooii.entity.Notice;
 import com.toyproject.Backend_ttooii.repository.MemberRepository;
 import com.toyproject.Backend_ttooii.repository.NoticeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +21,12 @@ import java.util.Optional;
 public class NoticeService {
     private NoticeRepository noticeRepository;
     private  MemberRepository memberRepository;
-    @Transactional
-    public List<NoticeDto> getNoticeList() {
-        List<Notice> notices = noticeRepository.findAll();
-        List<NoticeDto> noticeDtoList = new ArrayList<>();
-        for (Notice notice : notices) {
-            NoticeDto noticeDto = NoticeDto.builder()
-                    .id(notice.getId())
-                    .title(notice.getTitle())
-                    .content(notice.getContent())
-                    .writer(notice.getWriter())
-                    .created_at(notice.getCreated_at())
-                    .build();
 
-            noticeDtoList.add(noticeDto);
-        }
-        return noticeDtoList;
+    @Transactional
+    public Page<Notice> getNoticeList(int page){
+        return noticeRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId")));
     }
+
     @Transactional
     public Long savePost(NoticeDto noticeDto, Authentication authentication) {
         if(authentication.getName().length()>20){
@@ -43,12 +35,12 @@ public class NoticeService {
         else{
             noticeDto.setWriter(authentication.getName());
         }
-        return noticeRepository.save(noticeDto.toEntity()).getId();
+        return noticeRepository.save(noticeDto.toEntity()).getNoticeId();
     }
 
     @Transactional
     public Long updatePost(NoticeDto noticeDto){
-        return  noticeRepository.save(noticeDto.toEntity()).getId();
+        return  noticeRepository.save(noticeDto.toEntity()).getNoticeId();
     }
 
     @Transactional
@@ -57,11 +49,10 @@ public class NoticeService {
         Notice boardEntity = noticeWrapper.get();
 
         return NoticeDto.builder()
-                .id(boardEntity.getId())
+                .noticeId(boardEntity.getNoticeId())
                 .title(boardEntity.getTitle())
                 .content(boardEntity.getContent())
                 .writer(boardEntity.getWriter())
-                .created_at(boardEntity.getCreated_at())
                 .build();
     }
 

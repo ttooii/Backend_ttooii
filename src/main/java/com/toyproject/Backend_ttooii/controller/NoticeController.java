@@ -1,12 +1,14 @@
 package com.toyproject.Backend_ttooii.controller;
 
 import com.toyproject.Backend_ttooii.dto.NoticeDto;
+import com.toyproject.Backend_ttooii.entity.Notice;
 import com.toyproject.Backend_ttooii.service.NoticeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +30,16 @@ public class NoticeController {
     private NoticeService noticeService;
 
     @ApiOperation(value="공지사항 글 list 출력")
-    @ApiImplicitParam(name = "noticeList", value = "공지사항 list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "noticeList", value = "공지사항 list"),
+            @ApiImplicitParam(name = "totalPage", value = "총 페이지 수")})
     @GetMapping("/notice/list")
-    public String list(Model model) {
-        List<NoticeDto> noticeList=noticeService.getNoticeList();
-        model.addAttribute("noticeList",noticeList);
-        return "notice/list.html";
+    public Page<Notice> list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+        Page<Notice> noticeList=noticeService.getNoticeList(page);
+        int totalPage=noticeList.getTotalPages();
+        model.addAttribute("noticeList",noticeList.getTotalPages());
+        model.addAttribute("totalPage",totalPage);
+        return noticeList;
     }
 
     @ApiOperation(value = "공지사항 글 생성")
