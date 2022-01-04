@@ -78,13 +78,17 @@ public class House {
     @Column(name="registrant")
     private String registrant;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Member member;
+    */
 
+    /*
     @JsonIgnoreProperties({"houseId"})
     @OneToMany(mappedBy = "houseId")
     private List<Inclusive> inclusive = new ArrayList<Inclusive>();
+    */
 
     @Builder
     public House(
@@ -110,6 +114,6 @@ public class House {
         this.serviceType = serviceType;
         this.location = location;
         this.monthlyExpenses = monthlyExpenses;
-        this.member = member;
+        // this.member = member;
     }
 }

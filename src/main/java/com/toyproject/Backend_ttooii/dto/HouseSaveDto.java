@@ -17,7 +17,7 @@ public class HouseSaveDto {
     private String content;
     private String location;
     private String registrant;
-    private Member member;
+    // private Member member;
     private Inclusive inclusive;
     private float landArea;
     private int floor;
@@ -46,7 +46,7 @@ public class HouseSaveDto {
                 .location(location)
                 .serviceType(serviceType)
                 .monthlyExpenses(monthlyExpenses)
-                .member(member)
+                //.member(member)
                 .registrant(registrant)
                 .inclusive(inclusive)
                 .build();
@@ -70,7 +70,7 @@ public class HouseSaveDto {
         this.location = location;
         this.serviceType = serviceType;
         this.monthlyExpenses = monthlyExpenses;
-        this.member = member;
+        //this.member = member;
         this.registrant = registrant;
         this.inclusive = inclusive;
     }

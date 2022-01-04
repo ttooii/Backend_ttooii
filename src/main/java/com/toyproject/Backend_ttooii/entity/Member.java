@@ -66,8 +66,10 @@ public class Member extends BaseTimeEntity{
     @ColumnDefault("N")
     private String deletion;
 
+    /*
     @OneToMany(mappedBy = "member")
     private List<House> houses = new ArrayList<>();
+    */
 
     @Builder
     public Member(

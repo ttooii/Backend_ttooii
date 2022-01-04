@@ -17,7 +17,7 @@ public class HouseListDto {
     private String location;
     private String registrant;
     private Date completionApproval;
-    private Inclusive inclusive;
+    //private Inclusive inclusive;
     private int transactionType;
     private int serviceType;
     private int floor;
@@ -45,7 +45,7 @@ public class HouseListDto {
                 .serviceType(serviceType)
                 .monthlyExpenses(monthlyExpenses)
                 .registrant(registrant)
-                .inclusive(inclusive)
+                //.inclusive(inclusive)
                 .build();
     }
 
@@ -70,6 +70,6 @@ public class HouseListDto {
         this.location = location;
         this.serviceType = serviceType;
         this.monthlyExpenses = monthlyExpenses;
-        this.inclusive = inclusive;
+        //this.inclusive = inclusive;
     }
 }

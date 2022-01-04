@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body class="container">
+
+<div class="jumbotron">
+    <h2>house 매물 목록 조회</h2>
+</div>
+
+<table class="table">
+    <tr>
+        <th>매물 ID</th>
+        <th>거래 유형</th>
+        <th>서비스 유형</th>
+        <th>층</th>
+        <th>전체 층</th>
+        <th>방 개수</th>
+        <th>관리비</th>
+        <th>방향</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>대지 면적</th>
+        <th>입주 가능 일</th>
+        <th>완료 여부</th>
+        <th>위치</th>
+        <th>월세</th>
+    </tr>
+    <tr th:each="house: ${houseList}">
+        <td th:text="${house.houseId}"></td>
+        <td th:text="${house.transacptionType}"></td>
+        <td th:text="${house.serviceType}"></td>
+        <td th:text="${house.floor}"></td>
+        <td th:text="${house.totalFloor}"></td>
+        <td th:text="${house.roomCount}"></td>
+        <td th:text="${house.administrationCost}"></td>
+        <td th:text="${house.direction}"></td>
+        <td th:text="${house.title}"></td>
+        <td th:text="${house.content}"></td>
+        <td th:text="${house.landArea}"></td>
+        <td th:text="${house.movesInDates}"></td>
+        <td th:text="${house.completionApproval}"></td>
+        <td th:text="${house.location}"></td>
+        <td th:text="${house.monthlyExpenses}"></td>
+    </tr>
+</table>
+
+<nav style="text-align: center;">
+    <ul class="pagination"
+        th:with="start=${T(Math).floor(houseList.number/10)*10 + 1},
+                    last=(${start + 9 < houseList.totalPages ? start + 9 : houseList.totalPages})">
+        <li>
+            <a th:href="@{/boards(page=1)}" aria-label="First">
+                <span aria-hidden="true">First</span>
+            </a>
+        </li>
+
+        <li th:class="${houseList.first} ? 'disabled'">
+            <a th:href="${houseList.first} ? '#' :@{/houses(page=${boardList.number})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == houseList.number + 1} ? 'active'">
+            <a th:text="${page}" th:href="@{/boards(page=${page})}"></a>
+        </li>
+
+        <li th:class="${houseList.last} ? 'disabled'">
+            <a th:href="${houseList.last} ? '#' : @{/houses(page=${boardList.number + 2})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/houses(page=${houseList.totalPages})}" aria-label="Last">
+                <span aria-hidden="true">Last</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>
