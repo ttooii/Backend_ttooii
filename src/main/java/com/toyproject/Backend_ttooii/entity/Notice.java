@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Notice extends TimeEntity  {
 
     @Id
+    @Column(name = "notice_id", unique = true)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long noticeId;
 

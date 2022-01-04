@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name="board")
 public class Board extends TimeEntity {
     @Id
+    @Column(name = "board_id", unique = true)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long boardId;
 
