@@ -75,6 +75,9 @@ public class House {
     @Column(name = "monthly_expenses")
     private int monthlyExpenses;
 
+    @Column(name = "deposit")
+    private int deposit;
+
     @Column(name="registrant")
     private String registrant;
 
@@ -93,7 +96,7 @@ public class House {
     @Builder
     public House(
             String registrant, String houseId, String direction, String movesInDates, String title, String content, String location,
-            int transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int bathroomCount, int hit, int wishCount, float landArea, int serviceType, int monthlyExpenses,
+            int transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int bathroomCount, int hit, int wishCount, float landArea, int serviceType, int deposit, int monthlyExpenses,
             Date completionApproval, Member member, Inclusive inclusive) {
 
         this.registrant = registrant;
@@ -113,6 +116,7 @@ public class House {
         this.landArea = landArea;
         this.serviceType = serviceType;
         this.location = location;
+        this.deposit = deposit;
         this.monthlyExpenses = monthlyExpenses;
         // this.member = member;
     }

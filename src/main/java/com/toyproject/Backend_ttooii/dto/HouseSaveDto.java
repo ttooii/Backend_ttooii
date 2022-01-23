@@ -45,6 +45,7 @@ public class HouseSaveDto {
                 .landArea(landArea)
                 .location(location)
                 .serviceType(serviceType)
+                .deposit(deposit)
                 .monthlyExpenses(monthlyExpenses)
                 //.member(member)
                 .registrant(registrant)
@@ -69,6 +70,7 @@ public class HouseSaveDto {
         this.parkingCount = parkingCount;
         this.location = location;
         this.serviceType = serviceType;
+        this.deposit = deposit;
         this.monthlyExpenses = monthlyExpenses;
         //this.member = member;
         this.registrant = registrant;

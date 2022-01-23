@@ -24,6 +24,7 @@ public class HouseListDto {
     private int totalFloor;
     private int roomCount;
     private int administrationCost;
+    private int deposit;
     private int monthlyExpenses;
     private float landArea;
 
@@ -43,6 +44,7 @@ public class HouseListDto {
                 .completionApproval(completionApproval)
                 .location(location)
                 .serviceType(serviceType)
+                .deposit(deposit)
                 .monthlyExpenses(monthlyExpenses)
                 .registrant(registrant)
                 //.inclusive(inclusive)
@@ -51,7 +53,7 @@ public class HouseListDto {
 
     @Builder
     public HouseListDto(String registrant, String houseId, String direction, String title, String content, String movesInDates, String location,
-                        int transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int serviceType, int monthlyExpenses,
+                        int transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int serviceType, int deposit, int monthlyExpenses,
                         float landArea, Date completionApproval, Inclusive inclusive) {
 
         this.registrant = registrant;
@@ -69,6 +71,7 @@ public class HouseListDto {
         this.completionApproval = completionApproval;
         this.location = location;
         this.serviceType = serviceType;
+        this.deposit = deposit;
         this.monthlyExpenses = monthlyExpenses;
         //this.inclusive = inclusive;
     }
