@@ -11,4 +11,5 @@ public interface LikeLocationRepository extends JpaRepository<LikeLocation, Long
 
     List<LikeLocation> findByUserId(String userId);
 
+    List<LikeLocation> findByDistrict(String district);
 }

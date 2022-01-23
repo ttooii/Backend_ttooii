@@ -112,6 +112,7 @@ public class HouseService {
                 .location(house.getLocation())
                 .serviceType(house.getServiceType())
                 .monthlyExpenses(house.getMonthlyExpenses())
+                .deposit(house.getDeposit())
                 .build();
 
         return houseListDto;

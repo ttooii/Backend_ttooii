@@ -35,7 +35,10 @@ public class LikeLocationService {
         return likeLocationDtoList;
     }
     @Transactional
-    public Long saveLikeLocation(LikeLocationDto likeLocationDto ) {
-        return likeLocationRepository.save(likeLocationDto.toEntity()).getLikelocationId();
+    public Long saveLikeLocation(LikeLocationDto likeLocationDto) {
+        LikeLocation likeLocation = likeLocationDto.toEntity();
+
+        return likeLocation.getLikelocationId();
+
     }
 }
