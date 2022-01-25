@@ -3,10 +3,11 @@ package com.toyproject.Backend_ttooii.dto;
 import com.toyproject.Backend_ttooii.entity.House;
 import com.toyproject.Backend_ttooii.entity.Inclusive;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Date;
 import java.util.List;
-
+@Getter
 public class HouseListDto {
 
     private String houseId;
