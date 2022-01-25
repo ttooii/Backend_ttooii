@@ -13,17 +13,20 @@ import lombok.Setter;
 public class WishListDto {
     private House house;
     private String user_id;
+    private Long wishlistId;
 
     @Builder
-    public WishListDto(House house, String user_id) {
+    public WishListDto(House house, String user_id, Long wishlistId) {
         this.house = house;
         this.user_id = user_id;
+        this.wishlistId=wishlistId;
     }
 
     public Wishlist toEntity(){
         return Wishlist.builder()
                 .house(house)
                 .user_id(user_id)
+                .wishlistId(wishlistId)
                 .build();
     }
 
