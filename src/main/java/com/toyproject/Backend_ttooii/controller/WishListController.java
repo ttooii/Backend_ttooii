@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+@RestController
 @AllArgsConstructor
 @Api (tags={"집 위시리스트 API"})
 @ApiImplicitParams({
@@ -63,7 +63,7 @@ public class WishListController {
 
     @ApiOperation(value="장바구니 저장/ house 정보 모든 것을 넘겨줘야 함")
     @PostMapping("/wishlist/save")
-    public void save(@RequestBody HouseListDto houseDto, Authentication authentication){
+    public void save(HouseListDto houseDto, Authentication authentication){
         wishListService.saveWishList(houseDto,authentication);
     }
 
