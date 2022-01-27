@@ -21,12 +21,12 @@ public class Wishlist {
     private House house;
 
     @Column(name = "user_id")
-    private String user_id;
+    private String userId;
 
     @Builder
-    public Wishlist(House house, String user_id,Long wishlistId) {
+    public Wishlist(House house, String userId,Long wishlistId) {
         this.house = house;
-        this.user_id = user_id;
+        this.userId = userId;
         this.wishlistId=wishlistId;
     }
 }
