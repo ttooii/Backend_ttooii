@@ -1,8 +1,6 @@
 package com.toyproject.Backend_ttooii.controller;
 
 import com.toyproject.Backend_ttooii.dto.HouseListDto;
-import com.toyproject.Backend_ttooii.dto.WishListDto;
-import com.toyproject.Backend_ttooii.entity.Board;
 import com.toyproject.Backend_ttooii.entity.Wishlist;
 import com.toyproject.Backend_ttooii.service.WishListService;
 import io.swagger.annotations.Api;
@@ -11,11 +9,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -37,10 +35,10 @@ import java.util.List;
         @ApiImplicitParam(name = "heatingSystem", value = "난방 시스템", required = true),
         @ApiImplicitParam(name = "confirmation", value = "확인사항", required = true),
         @ApiImplicitParam(name = "registrant", value = "등록한 중개자 ID", required = true)})
+
 public class WishListController {
 
     private WishListService wishListService;
-
 
     @ApiOperation(value="장바구니 list 출력")
     @ApiImplicitParams({
@@ -48,8 +46,8 @@ public class WishListController {
         @ApiImplicitParam(name = "totalPage", value = "페이지 총수 ")
     })
     @GetMapping("/wishlist/list")
-    public Page<Wishlist> list(Model model,@RequestParam(required = false, defaultValue = "0", value = "page") int page) {
-        Page<Wishlist> wishList = wishListService.getWishList(page);
+    public Page<Wishlist> list(Model model,@RequestParam(required = false, defaultValue = "0", value = "page") int page, Authentication authentication) {
+        Page<Wishlist> wishList = wishListService.getWishList(page,authentication);
         int totalPage=wishList.getTotalPages();
         model.addAttribute("wishList",wishList.getTotalPages());
         model.addAttribute("totalPage",totalPage);
@@ -62,10 +60,11 @@ public class WishListController {
         wishListService.delete(no);
     }
 
+
     @ApiOperation(value="장바구니 저장/ house 정보 모든 것을 넘겨줘야 함")
     @PostMapping("/wishlist/save")
-    public void save( @RequestBody HouseListDto houseDto){
-        wishListService.saveWishList(houseDto);
+    public void save(@RequestBody HouseListDto houseDto, Authentication authentication){
+        wishListService.saveWishList(houseDto,authentication);
     }
 
 }
