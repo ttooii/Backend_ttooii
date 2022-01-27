@@ -31,11 +31,12 @@ public class LikeLocationController {
     @ApiOperation(value = "지역 즐겨찾기 생성")
     @ApiImplicitParam(name = "likeLocationDto", value = "지역 즐겨찾기")
     @PostMapping("/likeLocation/like")
-    public LikeLocation saveLikeLocaiton(@PathVariable String userId, @PathVariable Long id, @RequestBody LikeLocation likeLocation) {
+    public LikeLocation saveLikeLocaiton(@RequestParam String userId, @RequestParam Long id, @RequestBody LikeLocation likeLocation) {
 
         Optional<Member> member = memberRepository.findByuserId(userId);
         likeLocation.setUserId(member.get());
         LikeLocation likeLocation1 = likeLocationRepository.findById(id).get();
+
         likeLocation1.setDistrict(likeLocation.getDistrict());
 
         return likeLocation1;
