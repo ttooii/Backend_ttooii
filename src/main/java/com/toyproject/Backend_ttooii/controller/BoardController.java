@@ -1,11 +1,13 @@
 package com.toyproject.Backend_ttooii.controller;
 import com.toyproject.Backend_ttooii.dto.BoardDto;
+import com.toyproject.Backend_ttooii.entity.Board;
 import com.toyproject.Backend_ttooii.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +32,12 @@ public class BoardController {
     @ApiOperation(value="게시판 글 list 출력")
     @ApiImplicitParam(name = "BoardList", value = "게시판 list")
     @GetMapping("/board/list")
-    public String list(Model model) {
-        List<BoardDto> boardList=boardService.getBoardList();
-        model.addAttribute("BoardList",boardList);
-        return "board/list.html";
+    public Page<Board> list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+        Page<Board> boardList=boardService.getBoardList(page);
+        int totalPage=boardList.getTotalPages();
+        model.addAttribute("boardList",boardList.getTotalPages());
+        model.addAttribute("totalPage",totalPage);
+        return boardList;
     }
 
     @ApiOperation(value = "게시판 글 생성")

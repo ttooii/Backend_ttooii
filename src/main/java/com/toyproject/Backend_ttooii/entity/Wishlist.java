@@ -13,18 +13,20 @@ public class Wishlist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int wishlistId;
+    private Long wishlistId;
 
-    @JoinColumn(name = "house_id")
-    @ManyToOne
+
+    @ManyToOne(targetEntity = House.class,fetch = FetchType.LAZY)
+    @JoinColumn(name="house_id")
     private House house;
 
     @Column(name = "user_id")
-    private String user_id;
+    private String userId;
 
     @Builder
-    public Wishlist(House house, String user_id) {
+    public Wishlist(House house, String userId,Long wishlistId) {
         this.house = house;
-        this.user_id = user_id;
+        this.userId = userId;
+        this.wishlistId=wishlistId;
     }
 }
