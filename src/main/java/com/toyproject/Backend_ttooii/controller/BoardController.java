@@ -13,10 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
-@AllArgsConstructor
 @Api(tags = {"게시판 API"})
 @ApiImplicitParams({
         @ApiImplicitParam(name = "id", value = "글번호", required = true),
@@ -26,6 +22,8 @@ import java.util.List;
         @ApiImplicitParam(name = "created_at", value = "생성날짜/시간", required = true),
         @ApiImplicitParam(name = "modified_at", value = "변경날짜/시간", required = true)})
 
+@RestController
+@AllArgsConstructor
 public class BoardController {
     private BoardService boardService;
 
