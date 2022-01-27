@@ -13,10 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
-@AllArgsConstructor
 @Api(tags = {"게시판 API"})
 @ApiImplicitParams({
         @ApiImplicitParam(name = "id", value = "글번호", required = true),
@@ -26,6 +22,8 @@ import java.util.List;
         @ApiImplicitParam(name = "created_at", value = "생성날짜/시간", required = true),
         @ApiImplicitParam(name = "modified_at", value = "변경날짜/시간", required = true)})
 
+@RestController
+@AllArgsConstructor
 public class BoardController {
     private BoardService boardService;
 
@@ -48,9 +46,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String write(BoardDto boardDto, Authentication authentication) {
-        boardService.savePost(boardDto,authentication);
-        return "redirect:/board/list";
+    public Long write(BoardDto boardDto, Authentication authentication) {
+        return boardService.savePost(boardDto,authentication);
     }
 
     @ApiOperation(value="게시판 no.글 수정")
@@ -58,11 +55,9 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/board/edit/{no}")
-    public String edit(@PathVariable("no") Long no, Model model) {
+    public void edit(@PathVariable("no") Long no, Model model) {
         BoardDto boardDto = boardService.getPost(no);
         model.addAttribute("BoardDto", boardDto);
-        System.out.println(boardDto);
-        return "/board/update";
     }
 
     @ApiOperation(value="게시판 no.글 수정")
@@ -70,10 +65,8 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @PutMapping("/board/edit/{no}")
-    public String update(BoardDto boardDto) {
-        boardService.updatePost(boardDto);
-
-        return "redirect:/board/list";
+    public Long update(BoardDto boardDto) {
+        return boardService.updatePost(boardDto);
     }
 
     @ApiOperation(value="게시판 no.글 삭제")
@@ -81,9 +74,8 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @DeleteMapping("/board/{no}")
-    public String delete(@PathVariable("no") Long no) {
+    public void delete(@PathVariable("no") Long no) {
         boardService.deletePost(no);
-        return "redirect:/board/list";
     }
 
     @ApiOperation(value="게시판 no.글 출력")
@@ -91,9 +83,8 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/board/{no}")
-    public String detail(@PathVariable("no") Long no, Model model) {
+    public void detail(@PathVariable("no") Long no, Model model) {
         BoardDto boardDto = boardService.getPost(no);
         model.addAttribute("BoardDto",boardDto);
-        return "/board/detail";
     }
 }

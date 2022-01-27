@@ -24,7 +24,7 @@ public class WishListService {
     }
 
     @Transactional
-    public void saveWishList(HouseListDto houseDto, Authentication authentication){
+    public Long saveWishList(HouseListDto houseDto, Authentication authentication){
 
         House house=House.builder()
                 .houseId(houseDto.getHouseId())
@@ -51,7 +51,7 @@ public class WishListService {
         else{
             wishlistDto.setUserId(authentication.getName());
         }
-        wishListRepository.save(wishlistDto.toEntity());
+        return wishListRepository.save(wishlistDto.toEntity()).getWishlistId();
     }
 
     @Transactional
