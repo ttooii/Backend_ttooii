@@ -51,9 +51,8 @@ public class NoticeController {
     }
 
     @PostMapping("/notice/write")
-    public String write(NoticeDto noticeDto,Authentication authentication) {
-        noticeService.savePost(noticeDto,authentication);
-        return "redirect:/notice/list";
+    public Long write(NoticeDto noticeDto,Authentication authentication) {
+        return noticeService.savePost(noticeDto,authentication);
     }
 
     @ApiOperation(value="공지사항 no.글 수정")
@@ -61,11 +60,9 @@ public class NoticeController {
             @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/notice/edit/{no}")
-    public String edit(@PathVariable("no") Long no, Model model) {
+    public void edit(@PathVariable("no") Long no, Model model) {
         NoticeDto noticeDto = noticeService.getPost(no);
         model.addAttribute("noticeDto", noticeDto);
-        System.out.println(noticeDto);
-        return "/notice/update";
     }
 
     @ApiOperation(value="공지사항 no.글 수정")
@@ -73,18 +70,16 @@ public class NoticeController {
             @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @PutMapping("/notice/edit/{no}")
-    public String update(NoticeDto noticeDto) {
-        noticeService.updatePost(noticeDto);
-        return "redirect:/notice/list";
+    public Long update(NoticeDto noticeDto) {
+        return noticeService.updatePost(noticeDto);
     }
     @ApiOperation(value="공지사항 no.글 삭제")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @DeleteMapping("/notice/{no}")
-    public String delete(@PathVariable("no") Long no) {
+    public void delete(@PathVariable("no") Long no) {
         noticeService.deletePost(no);
-        return "redirect:/notice/list";
     }
 
     @ApiOperation(value="공지사항 no.글 출력")
@@ -92,9 +87,8 @@ public class NoticeController {
     @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
     @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/notice/{no}")
-    public String detail(@PathVariable("no") Long no, Model model) {
+    public void detail(@PathVariable("no") Long no, Model model) {
         NoticeDto noticeDto = noticeService.getPost(no);
         model.addAttribute("noticeDto", noticeDto);
-        return "/notice/detail";
     }
 }

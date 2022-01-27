@@ -46,9 +46,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String write(BoardDto boardDto, Authentication authentication) {
-        boardService.savePost(boardDto,authentication);
-        return "redirect:/board/list";
+    public Long write(BoardDto boardDto, Authentication authentication) {
+        return boardService.savePost(boardDto,authentication);
     }
 
     @ApiOperation(value="게시판 no.글 수정")
@@ -56,11 +55,9 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/board/edit/{no}")
-    public String edit(@PathVariable("no") Long no, Model model) {
+    public void edit(@PathVariable("no") Long no, Model model) {
         BoardDto boardDto = boardService.getPost(no);
         model.addAttribute("BoardDto", boardDto);
-        System.out.println(boardDto);
-        return "/board/update";
     }
 
     @ApiOperation(value="게시판 no.글 수정")
@@ -68,10 +65,8 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @PutMapping("/board/edit/{no}")
-    public String update(BoardDto boardDto) {
-        boardService.updatePost(boardDto);
-
-        return "redirect:/board/list";
+    public Long update(BoardDto boardDto) {
+        return boardService.updatePost(boardDto);
     }
 
     @ApiOperation(value="게시판 no.글 삭제")
@@ -79,9 +74,8 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @DeleteMapping("/board/{no}")
-    public String delete(@PathVariable("no") Long no) {
+    public void delete(@PathVariable("no") Long no) {
         boardService.deletePost(no);
-        return "redirect:/board/list";
     }
 
     @ApiOperation(value="게시판 no.글 출력")
@@ -89,9 +83,8 @@ public class BoardController {
             @ApiImplicitParam(name = "BoardDto", value = "게시판 정보"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/board/{no}")
-    public String detail(@PathVariable("no") Long no, Model model) {
+    public void detail(@PathVariable("no") Long no, Model model) {
         BoardDto boardDto = boardService.getPost(no);
         model.addAttribute("BoardDto",boardDto);
-        return "/board/detail";
     }
 }

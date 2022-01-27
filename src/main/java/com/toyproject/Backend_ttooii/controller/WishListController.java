@@ -63,8 +63,8 @@ public class WishListController {
 
     @ApiOperation(value="장바구니 저장/ house 정보 모든 것을 넘겨줘야 함")
     @PostMapping("/wishlist/save")
-    public void save(HouseListDto houseDto, Authentication authentication){
-        wishListService.saveWishList(houseDto,authentication);
+    public Long save(HouseListDto houseDto, Authentication authentication){
+        return wishListService.saveWishList(houseDto,authentication);
     }
 
 }
