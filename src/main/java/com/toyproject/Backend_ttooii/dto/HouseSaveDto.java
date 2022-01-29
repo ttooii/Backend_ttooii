@@ -26,10 +26,10 @@ public class HouseSaveDto {
     private int administrationCost;
     private int parkingCount;
     private int bathroomCount;
-    private int monthlyExpenses;
+    private String monthlyExpenses;
     private int heatingSystem;
-    private int transactionType;
-    private int serviceType;
+    private String transactionType;
+    private String serviceType;
 
     public House toEntity() {
         return House.builder()

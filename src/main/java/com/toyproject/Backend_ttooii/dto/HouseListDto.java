@@ -19,14 +19,14 @@ public class HouseListDto {
     private String registrant;
     private Date completionApproval;
     //private Inclusive inclusive;
-    private int transactionType;
-    private int serviceType;
+    private String transactionType;
+    private String serviceType;
+    private String monthlyExpenses;
     private int floor;
     private int totalFloor;
     private int roomCount;
     private int administrationCost;
     private int deposit;
-    private int monthlyExpenses;
     private float landArea;
 
     public House toEntity() {
@@ -54,7 +54,7 @@ public class HouseListDto {
 
     @Builder
     public HouseListDto(String registrant, String houseId, String direction, String title, String content, String movesInDates, String location,
-                        int transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int serviceType, int deposit, int monthlyExpenses,
+                        String transactionType, int floor, int totalFloor, int roomCount, int administrationCost, String serviceType, int deposit, String monthlyExpenses,
                         float landArea, Date completionApproval, Inclusive inclusive) {
 
         this.registrant = registrant;

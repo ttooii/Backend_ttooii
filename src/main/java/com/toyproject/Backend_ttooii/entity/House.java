@@ -24,11 +24,11 @@ public class House {
     @NotNull
     private String houseId;
 
-    @Column(name = "transaction_type", length = 20)
-    private int transactionType;
+    @Column(name = "transaction_type")
+    private String transactionType;
 
     @Column(name = "service_type")
-    private int serviceType;
+    private String serviceType;
 
     @Column(name = "floor")
     private int floor;
@@ -73,7 +73,7 @@ public class House {
     private String location;
 
     @Column(name = "monthly_expenses")
-    private int monthlyExpenses;
+    private String monthlyExpenses;
 
     @Column(name = "deposit")
     private int deposit;
@@ -96,7 +96,7 @@ public class House {
     @Builder
     public House(
             String registrant, String houseId, String direction, String movesInDates, String title, String content, String location,
-            int transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int bathroomCount, int hit, int wishCount, float landArea, int serviceType, int deposit, int monthlyExpenses,
+            String transactionType, int floor, int totalFloor, int roomCount, int administrationCost, int bathroomCount, int hit, int wishCount, float landArea, String serviceType, int deposit, String monthlyExpenses,
             Date completionApproval, Member member, Inclusive inclusive) {
 
         this.registrant = registrant;

@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -86,8 +87,8 @@ public class HouseController {
     }
 
     // houseId 당 조회
-    @GetMapping(value = "/house/{id}", produces = "application/json; charset=utf8")
-    public HouseListDto detail(@PathVariable("id") String houseId, Model model) {
+    @GetMapping(value = "/house/findId", produces = "application/json; charset=utf8")
+    public HouseListDto detail(@RequestParam("houseId") String houseId, Model model) {
         HouseListDto houseListDto = houseService.getHouseId(houseId);
         model.addAttribute("post", houseListDto);
 
@@ -110,9 +111,9 @@ public class HouseController {
     // 옵션으로 방 목록 조회
     @GetMapping(value = "/house/optionSearch", produces = "application/json; charset=utf8")
     public List<HouseListDto> optionSearch(
-            @RequestParam(value = "option1", required = false) String option1,
-            @RequestParam(value = "option2", required = false) String option2,
-            @RequestParam(value = "option3", required = false) String option3, Model model) {
+            @RequestParam(value = "serviceType", required = false, defaultValue = "1") @Nullable String option1,
+            @RequestParam(value = "transactionType", required = false, defaultValue = "1") @Nullable String option2,
+            @RequestParam(value = "monthlyExpenses", required = false) @Nullable String option3, Model model) {
 
         List<HouseListDto> houseListDtoList = new ArrayList<>();
         houseListDtoList.addAll(houseService.searchServiceTypeHouse(option1));
