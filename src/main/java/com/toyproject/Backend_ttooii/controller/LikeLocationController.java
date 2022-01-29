@@ -30,8 +30,8 @@ public class LikeLocationController {
     // 지역 즐겨찾기
     @ApiOperation(value = "지역 즐겨찾기 생성")
     @ApiImplicitParam(name = "likeLocationDto", value = "지역 즐겨찾기")
-    @PostMapping("/likeLocation/like")
-    public LikeLocation saveLikeLocaiton(@RequestParam String userId, @RequestParam Long id, @RequestBody LikeLocation likeLocation) {
+    @PostMapping("/likeLocation/like/{userId}/{id}")
+    public LikeLocation saveLikeLocaiton(@PathVariable String userId, @PathVariable Long id, @RequestBody LikeLocation likeLocation) {
 
         Optional<Member> member = memberRepository.findByuserId(userId);
         likeLocation.setUserId(member.get());

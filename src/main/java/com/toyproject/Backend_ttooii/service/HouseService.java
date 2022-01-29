@@ -91,7 +91,7 @@ public class HouseService {
         return pageList;
          */
 
-        return houseRepository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "houseId")));
+        return houseRepository.findAll(PageRequest.of(page, 200000, Sort.by(Sort.Direction.DESC, "houseId")));
     }
 
     @Transactional
