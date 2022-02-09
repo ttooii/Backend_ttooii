@@ -10,7 +10,7 @@ ec2 CODE = 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
 
 ## Function
 
-* 부동산 매물 조회 기능
+* 부동산 매물 조회 기능 <br>
 	원룸/투룸/쓰리룸 혹은 월세/전세/매매 등의 필터링을 통해 방을 찾을 수 있음.
 	매물들을 지도에 보여주어 집의 위치를 한 눈에 알아볼 수 있음.
 
