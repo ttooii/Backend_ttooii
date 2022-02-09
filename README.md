@@ -3,7 +3,7 @@
 
 ec2 CODE = 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
 
-### Members
+## Members
  Backend: 김경욱 | 김영은
  Frontend: 유혁상 | 이화진
 
@@ -30,6 +30,6 @@ ec2 CODE = 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
 <img height="400" alt="캡처" src="https://user-images.githubusercontent.com/56907015/153184473-3b8141a5-42ad-477f-a1b0-e39afb1be07b.png">
 
 
-##실행 동영상 링크
+## 실행 동영상 링크
 	
 
