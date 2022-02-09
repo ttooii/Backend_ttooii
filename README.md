@@ -4,7 +4,7 @@
 ec2 CODE = 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
 
 ## Members
- Backend: 김경욱 | 김영은
+ Backend: 김경욱 | 김영은 <br>
  Frontend: 유혁상 | 이화진
 
 
