@@ -31,5 +31,6 @@ ec2 CODE = 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
 
 
 ## 실행 동영상 링크
-	
+## 개발 기간
+2021.09~2022.02
 
