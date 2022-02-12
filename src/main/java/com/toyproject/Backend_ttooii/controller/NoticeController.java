@@ -38,7 +38,7 @@ public class NoticeController {
     public Page<Notice> list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
         Page<Notice> noticeList=noticeService.getNoticeList(page);
         int totalPage=noticeList.getTotalPages();
-        model.addAttribute("noticeList",noticeList.getTotalPages());
+        model.addAttribute("noticeList",noticeList.getContent());
         model.addAttribute("totalPage",totalPage);
         return noticeList;
     }
