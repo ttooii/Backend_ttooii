@@ -1,6 +1,7 @@
 package com.toyproject.Backend_ttooii.controller;
 import com.toyproject.Backend_ttooii.dto.BoardDto;
 import com.toyproject.Backend_ttooii.entity.Board;
+import com.toyproject.Backend_ttooii.entity.Notice;
 import com.toyproject.Backend_ttooii.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,12 +31,12 @@ public class BoardController {
     @ApiOperation(value="게시판 글 list 출력")
     @ApiImplicitParam(name = "BoardList", value = "게시판 list")
     @GetMapping("/board/list")
-    public String list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+    public Page<Board> list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
         Page<Board> boardList=boardService.getBoardList(page);
         int totalPage=boardList.getTotalPages();
         model.addAttribute("boardList",boardList.getContent());
         model.addAttribute("totalPage",totalPage);
-        return "/board/list";
+        return boardList;
     }
 
     @ApiOperation(value = "게시판 글 생성")
