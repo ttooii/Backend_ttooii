@@ -30,12 +30,12 @@ public class BoardController {
     @ApiOperation(value="게시판 글 list 출력")
     @ApiImplicitParam(name = "BoardList", value = "게시판 list")
     @GetMapping("/board/list")
-    public Page<Board> list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+    public String list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
         Page<Board> boardList=boardService.getBoardList(page);
         int totalPage=boardList.getTotalPages();
-        model.addAttribute("boardList",boardList.getTotalPages());
+        model.addAttribute("boardList",boardList.getContent());
         model.addAttribute("totalPage",totalPage);
-        return boardList;
+        return "/board/list";
     }
 
     @ApiOperation(value = "게시판 글 생성")
