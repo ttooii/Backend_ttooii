@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
-@Api(tags = {"네이버 카카오 로그인 API"})
+@Api(tags = {"네이버 카카오 로그인 API Controller"})
 public class OAuth2Controller {
     @Autowired
     private OAuth2SignupService oAuth2SignupService;
