@@ -24,11 +24,11 @@ spring:
       client:
         registration:
           kakao:
-            client-id: 351b03d10108845002f9d13d8de3e8b7
-            client-secret: J7K60u0BCU0xWXtAXbCHiKcHbzgSEkEO
+            client-id:
+            client-secret: 
           naver:
-            client-id: UlOvgcfnJwbDR074rXw_
-            client-secret: xC4n1elV4e
+            client-id: 
+            client-secret: 
 
 logging:
   level:

@@ -18,12 +18,12 @@ import java.util.List;
 
 @Api(tags = {"공지사항 API"})
 @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", value = "글번호", required = true),
+        @ApiImplicitParam(name = "noticeId", value = "글번호", required = true),
         @ApiImplicitParam(name = "title", value = "글제목", required = true),
         @ApiImplicitParam(name = "writer", value = "글쓴이", required = true),
         @ApiImplicitParam(name = "content", value = "내용", required = true),
-        @ApiImplicitParam(name = "created_at", value = "생성날짜/시간", required = true),
-        @ApiImplicitParam(name = "modified_at", value = "변경날짜/시간", required = true)})
+        @ApiImplicitParam(name = "createdAt", value = "생성날짜/시간", required = true),
+        @ApiImplicitParam(name = "modifiedAt", value = "변경날짜/시간", required = true)})
 
 @RestController
 @AllArgsConstructor
@@ -38,13 +38,13 @@ public class NoticeController {
     public Page<Notice> list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
         Page<Notice> noticeList=noticeService.getNoticeList(page);
         int totalPage=noticeList.getTotalPages();
-        model.addAttribute("noticeList",noticeList.getTotalPages());
+        model.addAttribute("noticeList",noticeList.getContent());
         model.addAttribute("totalPage",totalPage);
         return noticeList;
     }
 
     @ApiOperation(value = "공지사항 글 생성")
-    @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보")
+    @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보/title, content만 필요/ writer는 로그인한 아이디로 자동 저장,createAt과 modifiedAt도 자동생성및 저장")
     @GetMapping("/notice/write")
     public String write() {
         return "/notice/write.html";
@@ -57,7 +57,7 @@ public class NoticeController {
 
     @ApiOperation(value="공지사항 no.글 수정")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보"),
+            @ApiImplicitParam(name = "noticeDto", value = "공지사항 정보/title과 content만 수정 가능"),
             @ApiImplicitParam(name = "no", value = "글 번호")})
     @GetMapping("/notice/edit/{no}")
     public void edit(@PathVariable("no") Long no, Model model) {
