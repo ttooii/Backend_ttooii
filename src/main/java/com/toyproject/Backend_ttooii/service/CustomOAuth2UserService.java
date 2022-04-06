@@ -60,13 +60,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             OAuth2Error oauth2Error = new OAuth2Error(
                     MISSING_USER_INFO_URI_ERROR_CODE,
                     "Missing required UserInfo Uri in UserInfoEndpoint for Client Registration: " +
-                            userRequest.getClientRegistration().getRegistrationId(),
-                    null
-            );
+                            userRequest.getClientRegistration().getRegistrationId(),null); // 현재 진행 중인 서비스 정보
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString());
         }
-        providerType=userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
+        providerType = userRequest.getClientRegistration().getRegistrationId();
+        // OAuth2 로그인 시 키 값이 된다. 구글은 키 값이 "sub"이고, 네이버는 "response"이고, 카카오는 "id"이다. 각각 다르므로 이렇게 따로 변수로 받아서 넣어줘야함.
+        String userNameAttributeName = userRequest
+                .getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
         //providerType=userRequest.getClientRegistration().getRegistrationId();
 

@@ -28,7 +28,7 @@ import static com.toyproject.Backend_ttooii.security.SocialType.KAKAO;
 import static com.toyproject.Backend_ttooii.security.SocialType.NAVER;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity // Spring Security 설정들을 활성화 시켜줌
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MemberService memberService;
@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // URL 별 권한 관리를 설정하는 옵션의 시작점
         http.authorizeRequests()
                 // 페이지 권한 설정
                 .antMatchers("/**").permitAll()
